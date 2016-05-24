@@ -2,8 +2,10 @@
 
 ## 1.1.0.1602
 
+* PowerShell 3.0 now minimum supported version
 * Added pester tests
 * Fixed all warnings relating to PSScriptAnalyzer 1.5.0
+* General code improvements
 
 ## 1.0.1.2
 
