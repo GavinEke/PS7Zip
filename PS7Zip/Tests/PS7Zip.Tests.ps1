@@ -1,13 +1,11 @@
-#handle PS2
-if(-not $PSScriptRoot)
-{
+#Handle ISE
+If (!($PSScriptRoot)) {
     $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 }
 
 #Verbose output if this isn't master, or we are testing locally
 $Verbose = @{}
-if($env:APPVEYOR_REPO_BRANCH -and $env:APPVEYOR_REPO_BRANCH -notlike "master" -or -not $env:APPVEYOR_REPO_BRANCH)
-{
+If ($env:APPVEYOR_REPO_BRANCH -and $env:APPVEYOR_REPO_BRANCH -notlike "master" -or -not $env:APPVEYOR_REPO_BRANCH) {
     $Verbose.add("Verbose",$False)
 }
 
