@@ -1,6 +1,10 @@
 # See http://www.appveyor.com/docs/appveyor-yml for many more options
 image: WMF 5
 
+environment:
+  my_apikey:
+    secure: SzN/9XuDneoXfDr9MaS6Ugt1Bsj4MqxzcKB45uvBRGrmSozL+83cEfNEYdd/SYc2
+
 # Skip on updates to the readme.
 # We can force this by adding [skip ci] or [ci skip] anywhere in commit message
 skip_commits:
@@ -16,7 +20,10 @@ build: false
 
 test_script:
 # Test with native PS version
-  - ps: . .\appveyor.tests.ps1 -Test
+  - ps: . .\appveyor.ps1 -Test
 
 # Finalize pass - collect and upload results
-  - ps: . .\appveyor.tests.ps1 -Finalize
+  - ps: . .\appveyor.ps1 -Finalize
+
+deploy_script:
+  - ps: . .\appveyor.ps1 -Deploy
