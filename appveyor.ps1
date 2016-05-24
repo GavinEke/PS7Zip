@@ -4,8 +4,9 @@
 
 #If Finalize is specified, we collect XML output, upload tests, and indicate build errors
 param(
-    [switch]$Finalize,
     [switch]$Test,
+    [switch]$Finalize,
+    [switch]$Deploy,
     [string]$ProjectRoot = $ENV:APPVEYOR_BUILD_FOLDER
 )
 
@@ -77,4 +78,14 @@ If ($Finalize) {
 
             throw "$FailedCount tests failed."
         }
+}
+
+#Run a test with the current version of PowerShell, upload results
+If ($Deploy) {
+    Import-Module $ProjectRoot\PS7Zip -Force -ErrorAction SilentlyContinue
+    [Version]$PS7ZipGalleryVersion = Find-Package PS7Zip | Select-Object -ExpandProperty Version
+    [Version]$PS7ZipLocalVersion = Get-Module PS7Zip | Select-Object -ExpandProperty Version
+    If (($PS7ZipLocalVersion.Major -gt $PS7ZipGalleryVersion.Major) -or ($PS7ZipLocalVersion.Minor -gt $PS7ZipGalleryVersion.Minor)) {
+        Publish-Module -Path "$ProjectRoot\PS7Zip" -NuGetApiKey "$env:my_apikey"
+    }
 }
