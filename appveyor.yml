@@ -7,16 +7,16 @@ skip_commits:
   message: /Update README.md/
 
 install:
-  - ps: Install-PackageProvider Nuget -Force -Verbose
-  - ps: Set-PSRepository -Name PSGallery -InstallationPolicy Trusted -Verbose
-  - ps: Install-Module -Name Pester -Force -Verbose
-  - ps: Install-Module -Name PSScriptAnalyzer -Force -Verbose
+  - ps: Install-PackageProvider Nuget -Force
+  - ps: Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+  - ps: Install-Module -Name Pester -Force
+  - ps: Install-Module -Name PSScriptAnalyzer -Force
 
 build: false
 
 test_script:
 # Test with native PS version
-  - ps: Invoke-ScriptAnalyzer -Path .\PS7Zip -Verbose
   - ps: . .\appveyor.tests.ps1 -Test
+
 # Finalize pass - collect and upload results
   - ps: . .\appveyor.tests.ps1 -Finalize
