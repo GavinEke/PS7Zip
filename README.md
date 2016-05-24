@@ -2,13 +2,17 @@
 
 # PS7Zip
 
-Powershell module that allows you to work with compressed archives
+Powershell module that allows you to work with compressed archives (PS 3.0+)
 
 ## Installing
 
-Download and Install from the PowerShellGallery
+Download and Install from the PowerShellGallery (Recommended)
 
     Install-Module -Name PS7Zip
+
+Alternatively run the following command from PowerShell
+
+    iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/GavinEke/PS7Zip/master/install.ps1'))
 
 ## Help!
 
