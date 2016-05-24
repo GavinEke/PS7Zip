@@ -16,6 +16,6 @@ Either submit an issue on GitHub or contact me on Twitter @GavinEke
 
 ## Notes
 
-Parts of this module use the 7-Zip program.
-7-Zip is licensed under the GNU LGPL license.
+Parts of this module use the 7-Zip program.  
+7-Zip is licensed under the GNU LGPL license.  
 www.7-zip.org
