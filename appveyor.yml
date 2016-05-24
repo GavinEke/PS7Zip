@@ -6,8 +6,7 @@ skip_commits:
   message: /updated readme.*/
 
 install:
-  - ps: Install-Module -Name Pester
-  - ps: Install-Module -Name PSScriptAnalyzer
+  - cinst pester -y
 
 build: false
 
