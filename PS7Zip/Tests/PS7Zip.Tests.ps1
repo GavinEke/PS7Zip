@@ -72,13 +72,13 @@ Describe "Get-7Zip Function PS$PSVersion" {
         It 'should list contents of archive.zip in the current working folder' {
             $get7ziptest1 = Get-7Zip archive.zip
             Test-Path Variable:get7ziptest1 | Should Be $True
-            Write-Output -Object "$get7ziptest1" -ErrorAction SilentlyContinue
+            Write-Output "$get7ziptest1"
             Remove-Item archive*
         }
         It 'should list contents of .\folder\files.gz' {
             $get7ziptest2 = Get-7Zip ".\folder\files.gz"
             Test-Path Variable:get7ziptest2 | Should Be $True
-            Write-Output -Object "$get7ziptest2" -ErrorAction SilentlyContinue
+            Write-Output "$get7ziptest2"
             Remove-Item folder -Recurse
         }
     }
