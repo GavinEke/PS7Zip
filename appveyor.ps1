@@ -11,7 +11,7 @@ param(
 )
 
 #Initialize some variables, move to the project root
-$Timestamp = Get-date -uformat "%Y%m%d-%H%M%S"
+$Timestamp = Get-Date -uformat "%Y%m%d-%H%M%S"
 $PSVersion = $PSVersionTable.PSVersion.Major
 $TestFile = "TestResults_PS$PSVersion`_$TimeStamp.xml"
 
@@ -86,6 +86,7 @@ If ($Deploy) {
     [Version]$PS7ZipGalleryVersion = Find-Package PS7Zip | Select-Object -ExpandProperty Version
     [Version]$PS7ZipLocalVersion = Get-Module PS7Zip | Select-Object -ExpandProperty Version
     If (($PS7ZipLocalVersion.Major -gt $PS7ZipGalleryVersion.Major) -or ($PS7ZipLocalVersion.Minor -gt $PS7ZipGalleryVersion.Minor)) {
+        Write-Output "Deploying new version to the PowerShell Gallery"
         Publish-Module -Path "$ProjectRoot\PS7Zip" -NuGetApiKey "$env:my_apikey"
     }
 }
