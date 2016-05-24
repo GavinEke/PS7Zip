@@ -1,12 +1,14 @@
 # See http://www.appveyor.com/docs/appveyor-yml for many more options
+image: WMF 5
 
 # Skip on updates to the readme.
 # We can force this by adding [skip ci] or [ci skip] anywhere in commit message
 skip_commits:
-  message: /updated readme.*/
+  message: /Update README.md/
 
 install:
-  - cinst pester -y
+  - ps: Install-Module -Name Pester
+  - ps: Install-Module -Name PSScriptAnalyzer
 
 build: false
 
