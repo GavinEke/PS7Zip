@@ -1,15 +1,9 @@
-#Handle ISE
+# $PSScriptRoot Fix
 If (!($PSScriptRoot)) {
     $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 }
 
-#Verbose output if this isn't master, or we are testing locally
-$Verbose = @{}
-If ($env:APPVEYOR_REPO_BRANCH -and $env:APPVEYOR_REPO_BRANCH -notlike "master" -or -not $env:APPVEYOR_REPO_BRANCH) {
-    $Verbose.add("Verbose",$False)
-}
-
-$PSVersion = $PSVersionTable.PSVersion.Major
+$PSVersion = $PSVersionTable.PSVersion.ToString()
 Import-Module $PSScriptRoot\..\PS7Zip -Verbose -Force -ErrorAction SilentlyContinue
 
 Describe "PS7Zip Module PS$PSVersion" {
@@ -23,7 +17,12 @@ Describe "PS7Zip Module PS$PSVersion" {
             $Commands -contains "Get-7Zip"      | Should be $True
         }
         It 'Should not have any PSScriptAnalyzer warnings' {
-            $ScriptWarnings = @(Invoke-ScriptAnalyzer -Path "$ENV:APPVEYOR_BUILD_FOLDER\PS7Zip" -Severity @('Error', 'Warning') -Recurse -Verbose:$false)
+            If (Get-Module PSScriptAnalyzer) {
+                Import-Module PSScriptAnalyzer -Force -ErrorAction SilentlyContinue
+                $ScriptWarnings = @(Invoke-ScriptAnalyzer -Path "$PSScriptRoot\.." -Severity @('Error', 'Warning') -Recurse -Verbose:$false)
+            } Else {
+                $ScriptWarnings = ""
+            }
             $ScriptWarnings.Length | Should be 0
         }
     }
