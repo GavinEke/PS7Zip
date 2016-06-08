@@ -4,6 +4,7 @@ If (!($PSScriptRoot)) {
 }
 
 $PSVersion = $PSVersionTable.PSVersion.ToString()
+
 Import-Module $PSScriptRoot\..\PS7Zip -Verbose -Force -ErrorAction SilentlyContinue
 
 Describe "PS7Zip Module PS$PSVersion" {
