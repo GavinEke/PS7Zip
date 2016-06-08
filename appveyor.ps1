@@ -6,11 +6,11 @@
 param(
     [switch]$Test,
     [switch]$Finalize,
-    [switch]$Deploy,
-    [string]$ProjectRoot = $ENV:APPVEYOR_BUILD_FOLDER
+    [switch]$Deploy
 )
 
 #Initialize some variables, move to the project root
+$ProjectRoot = $ENV:APPVEYOR_BUILD_FOLDER
 $Timestamp = Get-Date -uformat "%Y%m%d-%H%M%S"
 $PSVersion = $PSVersionTable.PSVersion.Major
 $TestFile = "TestResults_PS$PSVersion`_$TimeStamp.xml"
@@ -28,7 +28,6 @@ If ($Test) {
     "`n`tSTATUS: Testing with PowerShell $PSVersion`n"
 
     Import-Module Pester
-    Import-Module PSScriptAnalyzer
     Invoke-Pester @Verbose -Path "$ProjectRoot\PS7Zip\Tests" -OutputFormat NUnitXml -OutputFile "$ProjectRoot\$TestFile" -PassThru | Export-Clixml -Path "$ProjectRoot\PesterResults_PS$PSVersion`_$Timestamp.xml"
 
     If ($env:APPVEYOR_JOB_ID) {
@@ -81,6 +80,6 @@ If ($Deploy) {
     [Version]$PS7ZipLocalVersion = Get-Module PS7Zip | Select-Object -ExpandProperty Version
     If (($PS7ZipLocalVersion.Major -gt $PS7ZipGalleryVersion.Major) -or ($PS7ZipLocalVersion.Minor -gt $PS7ZipGalleryVersion.Minor)) {
         Write-Output "Deploying new version to the PowerShell Gallery"
-        Publish-Module -Path "$ProjectRoot\PS7Zip" -NuGetApiKey "$env:my_apikey"
+        Publish-Module -Path "$ProjectRoot\PS7Zip" -NuGetApiKey "$env:NuGetApiKey"
     }
 }
