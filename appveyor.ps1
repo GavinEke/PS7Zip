@@ -28,14 +28,8 @@ If ($Test) {
     "`n`tSTATUS: Testing with PowerShell $PSVersion`n"
 
     Import-Module Pester
-    Invoke-Pester @Verbose -Path "$ProjectRoot\PS7Zip\Tests" -OutputFormat NUnitXml -OutputFile "$ProjectRoot\$TestFile" -PassThru | Export-Clixml -Path "$ProjectRoot\PesterResults_PS$PSVersion`_$Timestamp.xml"
-    
     Import-Module PSScriptAnalyzer
-    $saResults = Invoke-ScriptAnalyzer -Path "$ProjectRoot\PS7Zip" -Severity @('Error', 'Warning') -Recurse -Verbose:$false
-    If ($saResults) {
-        $saResults | Format-Table  
-        Write-Error -Message 'One or more Script Analyzer errors/warnings where found. Build cannot continue!'        
-    }
+    Invoke-Pester @Verbose -Path "$ProjectRoot\PS7Zip\Tests" -OutputFormat NUnitXml -OutputFile "$ProjectRoot\$TestFile" -PassThru | Export-Clixml -Path "$ProjectRoot\PesterResults_PS$PSVersion`_$Timestamp.xml"
 
     If ($env:APPVEYOR_JOB_ID) {
         (New-Object 'System.Net.WebClient').UploadFile( $Address, "$ProjectRoot\$TestFile" )
