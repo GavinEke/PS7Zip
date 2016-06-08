@@ -2,7 +2,7 @@
 image: WMF 5
 
 environment:
-  my_apikey:
+  NuGetApiKey:
     secure: SzN/9XuDneoXfDr9MaS6Ugt1Bsj4MqxzcKB45uvBRGrmSozL+83cEfNEYdd/SYc2
 
 # Skip on updates to the readme.
