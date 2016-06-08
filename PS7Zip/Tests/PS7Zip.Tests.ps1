@@ -22,6 +22,10 @@ Describe "PS7Zip Module PS$PSVersion" {
             $Commands -contains "Expand-7Zip"   | Should be $True
             $Commands -contains "Get-7Zip"      | Should be $True
         }
+        It 'Should not have any PSScriptAnalyzer warnings' {
+            $ScriptWarnings = @(Invoke-ScriptAnalyzer -Path "$ENV:APPVEYOR_BUILD_FOLDER\PS7Zip" -Severity @('Error', 'Warning') -Recurse -Verbose:$false)
+            $ScriptWarnings.Length | Should be 0
+        }
     }
 }
  
