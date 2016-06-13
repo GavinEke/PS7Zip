@@ -2,6 +2,8 @@
 
 # PS7Zip
 
+[![Join the chat at https://gitter.im/GavinEke/PS7Zip](https://badges.gitter.im/GavinEke/PS7Zip.svg)](https://gitter.im/GavinEke/PS7Zip?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Powershell module that allows you to work with compressed archives (PS 3.0+)
 
 ## Installing
