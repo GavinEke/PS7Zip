@@ -1,4 +1,4 @@
-![AppVeyor Status](https://ci.appveyor.com/api/projects/status/github/GavinEke/PS7Zip)
+[![AppVeyor Status](https://ci.appveyor.com/api/projects/status/github/GavinEke/PS7Zip)](https://ci.appveyor.com/project/GavinEke/ps7zip)
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/GavinEke/PS7Zip)
 
