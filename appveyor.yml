@@ -1,4 +1,8 @@
 # See http://www.appveyor.com/docs/appveyor-yml for many more options
+os:
+  - "Windows Server 2012"
+  - "WMF 5"
+  - "Visual Studio 2015"
 
 environment:
   NuGetApiKey:
