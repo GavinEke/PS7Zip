@@ -1,8 +1,4 @@
 # See http://www.appveyor.com/docs/appveyor-yml for many more options
-os:
-  - "Windows Server 2012"
-  - "WMF 5"
-  - "Visual Studio 2015"
 
 environment:
   NuGetApiKey:
@@ -29,36 +25,10 @@ build: false
 
 test_script:
 # Test with native PS version
-  - SET PATH=c:\Program Files\WindowsPowerShell\Modules\;%PATH%;
-  - ps: |
-      $ProjectRoot = $ENV:APPVEYOR_BUILD_FOLDER
-      $Timestamp = Get-Date -uformat "%Y%m%d-%H%M%S"
-      $PSVersion = $PSVersionTable.PSVersion.Major
-      $TestFile = "TestResults_PS$PSVersion`_$TimeStamp.xml"
-      $Address = "https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)"
-      Set-Location $ProjectRoot
-      "`n`tSTATUS: Testing with PowerShell $PSVersion`n"
-      Import-Module Pester
-      Invoke-Pester @Verbose -Path "$ProjectRoot\PS7Zip\Tests" -OutputFormat NUnitXml -OutputFile "$ProjectRoot\$TestFile" -PassThru | Export-Clixml -Path "$ProjectRoot\PesterResults_PS$PSVersion`_$Timestamp.xml"
-      If ($env:APPVEYOR_JOB_ID) {
-          (New-Object 'System.Net.WebClient').UploadFile( $Address, "$ProjectRoot\$TestFile" )
-      }
-      $AllFiles = Get-ChildItem -Path $ProjectRoot\PesterResults*.xml | Select -ExpandProperty FullName
-      "`n`tSTATUS: Finalizing results`n"
-      "COLLATING FILES:`n$($AllFiles | Out-String)"
-      $Results = @( Get-ChildItem -Path "$ProjectRoot\PesterResults_PS*.xml" | Import-Clixml )
-      $FailedCount = $Results | Select -ExpandProperty FailedCount | Measure-Object -Sum | Select -ExpandProperty Sum
-      If ($FailedCount -gt 0) {
-        $FailedItems = $Results | Select -ExpandProperty TestResult | Where {$_.Passed -notlike $True}
-        "FAILED TESTS SUMMARY:`n"
-        $FailedItems | ForEach-Object {
-          $Item = $_
-          [pscustomobject]@{
-            Describe = $Item.Describe
-            Context = $Item.Context
-            Name = "It $($Item.Name)"
-            Result = $Item.Result
-          }
-        } | Sort Describe, Context, Name, Result | Format-List
-      throw "$FailedCount tests failed."
-      }
+  - ps: . .\appveyor.ps1 -Test
+
+# Finalize pass - collect and upload results
+  - ps: . .\appveyor.ps1 -Finalize
+
+deploy_script:
+  - ps: . .\appveyor.ps1 -Deploy
