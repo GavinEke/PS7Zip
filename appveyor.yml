@@ -40,9 +40,23 @@ test_script:
     If ($env:APPVEYOR_JOB_ID) {
         (New-Object 'System.Net.WebClient').UploadFile( $Address, "$ProjectRoot\$TestFile" )
     }
-
-# Finalize pass - collect and upload results
-#  - ps: . .\appveyor.ps1 -Finalize
-
-#deploy_script:
-#  - ps: . .\appveyor.ps1 -Deploy
+    $AllFiles = Get-ChildItem -Path $ProjectRoot\PesterResults*.xml | Select -ExpandProperty FullName
+    "`n`tSTATUS: Finalizing results`n"
+    "COLLATING FILES:`n$($AllFiles | Out-String)"
+    #What failed?
+    $Results = @( Get-ChildItem -Path "$ProjectRoot\PesterResults_PS*.xml" | Import-Clixml )
+    $FailedCount = $Results | Select -ExpandProperty FailedCount | Measure-Object -Sum | Select -ExpandProperty Sum
+    If ($FailedCount -gt 0) {
+      $FailedItems = $Results | Select -ExpandProperty TestResult | Where {$_.Passed -notlike $True}
+      "FAILED TESTS SUMMARY:`n"
+      $FailedItems | ForEach-Object {
+        $Item = $_
+        [pscustomobject]@{
+          Describe = $Item.Describe
+          Context = $Item.Context
+          Name = "It $($Item.Name)"
+          Result = $Item.Result
+        }
+      } | Sort Describe, Context, Name, Result | Format-List
+    throw "$FailedCount tests failed."
+    }
