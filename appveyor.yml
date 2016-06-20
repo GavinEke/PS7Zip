@@ -10,34 +10,13 @@ skip_commits:
   message: /.(md|yml)/
 
 install:
-  - ps: |
-      If ($PSVersionTable.PSVersion -lt [Version]'5.0') {
-        nuget install Pester -source https://www.powershellgallery.com/api/v2 -outputDirectory "$Env:ProgramFiles\WindowsPowerShell\Modules\."
-        nuget install PSScriptAnalyzer -source https://www.powershellgallery.com/api/v2 -outputDirectory "$Env:ProgramFiles\WindowsPowerShell\Modules\."
-      } Else {
-        Install-PackageProvider Nuget -Force | Out-Null
-        Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-        Install-Module -Name Pester -Force
-        Install-Module -Name PSScriptAnalyzer -Force
-      }
+  - ps: . .\appveyor.ps1 -Install
 
 build: false
 
 test_script:
 # Test with native PS version
-  - ps: |
-    $ProjectRoot = $ENV:APPVEYOR_BUILD_FOLDER
-    $Timestamp = Get-Date -uformat "%Y%m%d-%H%M%S"
-    $PSVersion = $PSVersionTable.PSVersion.Major
-    $TestFile = "TestResults_PS$PSVersion`_$TimeStamp.xml"
-    $Address = "https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)"
-    Set-Location $ProjectRoot
-    "`n`tSTATUS: Testing with PowerShell $PSVersion`n"
-    Import-Module Pester
-    Invoke-Pester @Verbose -Path "$ProjectRoot\PS7Zip\Tests" -OutputFormat NUnitXml -OutputFile "$ProjectRoot\$TestFile" -PassThru | Export-Clixml -Path "$ProjectRoot\PesterResults_PS$PSVersion`_$Timestamp.xml"
-    If ($env:APPVEYOR_JOB_ID) {
-        (New-Object 'System.Net.WebClient').UploadFile( $Address, "$ProjectRoot\$TestFile" )
-    }
+  - ps: . .\appveyor.ps1 -Test
 
 # Finalize pass - collect and upload results
   - ps: . .\appveyor.ps1 -Finalize
