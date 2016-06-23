@@ -1,7 +1,5 @@
 [![AppVeyor Status](https://ci.appveyor.com/api/projects/status/github/GavinEke/PS7Zip)](https://ci.appveyor.com/project/GavinEke/ps7zip)
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/GavinEke/PS7Zip)
-
 # PS7Zip
 
 Powershell module that allows you to work with compressed archives (PS 3.0+)
@@ -19,6 +17,8 @@ Alternatively run the following command from PowerShell
 ## Help!
 
 Either submit an issue on GitHub or contact me on Twitter @GavinEke
+
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/GavinEke/PS7Zip)
 
 ## Notes
 
