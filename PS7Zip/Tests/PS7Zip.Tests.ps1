@@ -29,7 +29,7 @@ Describe "PS7Zip Module PS$PSVersion" {
         $script:manifest = $null
         It "has a valid manifest" {
             {
-                $script:manifest = Test-ModuleManifest -Path "$PSScriptRoot\..\PS7Zip\PS7Zip.psd1" -ErrorAction Stop -WarningAction SilentlyContinue
+                $script:manifest = Test-ModuleManifest -Path "$PSScriptRoot\..\PS7Zip.psd1" -ErrorAction Stop -WarningAction SilentlyContinue
             } | Should Not Throw
         }
         It "has a valid name in the manifest" {
