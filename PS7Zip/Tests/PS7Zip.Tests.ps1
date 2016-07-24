@@ -26,6 +26,21 @@ Describe "PS7Zip Module PS$PSVersion" {
             }
             $ScriptWarnings.Length | Should be 0
         }
+        $script:manifest = $null
+        It "has a valid manifest" {
+            {
+                $script:manifest = Test-ModuleManifest -Path "$PSScriptRoot\..\PS7Zip\PS7Zip.psd1" -ErrorAction Stop -WarningAction SilentlyContinue
+            } | Should Not Throw
+        }
+        It "has a valid name in the manifest" {
+            $script:manifest.Name | Should Be PS7Zip
+        }
+        It "has a valid guid in the manifest" {
+            $script:manifest.Guid | Should Be '46cd1d63-7d41-4cfa-9a69-c950d224b291'
+        }
+        It "has a valid version in the manifest" {
+            $script:manifest.Version -as [Version] | Should Not BeNullOrEmpty
+        }
     }
 }
  
