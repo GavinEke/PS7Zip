@@ -10,7 +10,7 @@
 RootModule = 'PS7Zip.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.1.0.1603'
+ModuleVersion = '1.2.0.1603'
 
 # ID used to uniquely identify this module
 GUID = '46cd1d63-7d41-4cfa-9a69-c950d224b291'
