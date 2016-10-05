@@ -10,7 +10,7 @@
 RootModule = 'PS7Zip.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.2.0.1603'
+ModuleVersion = '1.3.0.1604'
 
 # ID used to uniquely identify this module
 GUID = '46cd1d63-7d41-4cfa-9a69-c950d224b291'
@@ -102,7 +102,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = '* 7za.exe binary file updated to 16.03        '
+        ReleaseNotes = '* 7za.exe binary file updated to 16.04        '
 
     } # End of PSData hashtable
 
