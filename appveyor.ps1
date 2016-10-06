@@ -89,10 +89,15 @@ If ($Finalize) {
 #Run a test with the current version of PowerShell, upload results
 If ($Deploy) {
     Import-Module $ProjectRoot\PS7Zip -Force -ErrorAction SilentlyContinue
+    
     [Version]$PS7ZipGalleryVersion = Find-Package PS7Zip -ErrorAction Stop | Select-Object -ExpandProperty Version
     [Version]$PS7ZipLocalVersion = Get-Module PS7Zip -ErrorAction Stop | Select-Object -ExpandProperty Version
+    
     If (($PS7ZipLocalVersion.Major -gt $PS7ZipGalleryVersion.Major) -or ($PS7ZipLocalVersion.Minor -gt $PS7ZipGalleryVersion.Minor)) {
         Write-Output "Deploying new version to the PowerShell Gallery"
         Publish-Module -Path "$ProjectRoot\PS7Zip" -NuGetApiKey "$env:NuGetApiKey"
     }
+    
+    Compress-Archive -Path "$ProjectRoot\PS7Zip" -DestinationPath "$ProjectRoot\PS7Zip-$PS7ZipLocalVersion.zip"
+    Push-AppveyorArtifact "$ProjectRoot\PS7Zip-$PS7ZipLocalVersion.zip"
 }
