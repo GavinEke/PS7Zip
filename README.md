@@ -14,11 +14,9 @@ Alternatively run the following command from PowerShell
 
     iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/GavinEke/PS7Zip/master/install.ps1'))
 
-## Help!
+## Contribute
 
-Either submit an issue on GitHub or contact me on Twitter @GavinEke
-
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/GavinEke/PS7Zip)
+Please submit an issue on GitHub or if you know how to fix it please submit a pull request
 
 ## Notes
 
