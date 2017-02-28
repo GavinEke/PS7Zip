@@ -27,4 +27,4 @@ test_script:
   - ps: . .\appveyor.ps1 -Finalize
 
 deploy_script:
-  - ps: . .\appveyor.ps1 -Deploy
+  - ps: If ($PSVersionTable.PSVersion.Major -eq 5) {. .\appveyor.ps1 -Deploy}
