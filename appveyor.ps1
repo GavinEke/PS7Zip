@@ -13,7 +13,7 @@ param(
 #Initialize some variables, move to the project root
 $ProjectRoot = $ENV:APPVEYOR_BUILD_FOLDER
 $Timestamp = Get-Date -uformat "%Y%m%d-%H%M%S"
-$PSVersion = $PSVersionTable.PSVersion.Major
+$PSVersion = $PSVersionTable.PSVersion.ToString()
 $TestFile = "TestResults_PS$PSVersion`_$TimeStamp.xml"
 
 $Address = "https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)"
@@ -88,6 +88,7 @@ If ($Finalize) {
 
 #Run a test with the current version of PowerShell, upload results
 If ($Deploy) {
+    Write-Host "$env:APPVEYOR_BUILD_VERSION"
     Import-Module $ProjectRoot\PS7Zip -Force -ErrorAction SilentlyContinue
     
     [Version]$PS7ZipGalleryVersion = Find-Package PS7Zip -ErrorAction Stop | Select-Object -ExpandProperty Version
@@ -99,5 +100,6 @@ If ($Deploy) {
     }
     
     Compress-Archive -Path "$ProjectRoot\PS7Zip" -DestinationPath "$ProjectRoot\PS7Zip-$PS7ZipLocalVersion.zip"
+    
     Push-AppveyorArtifact "$ProjectRoot\PS7Zip-$PS7ZipLocalVersion.zip"
 }
