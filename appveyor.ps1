@@ -27,12 +27,12 @@ If ($env:APPVEYOR_REPO_BRANCH -and $env:APPVEYOR_REPO_BRANCH -notlike "master") 
 If ($Install) {
     If ($PSVersionTable.PSVersion -lt [Version]'5.0') {
         nuget install Pester -source https://www.powershellgallery.com/api/v2 -outputDirectory "$Env:ProgramFiles\WindowsPowerShell\Modules\."
+        nuget install platyPS -source https://www.powershellgallery.com/api/v2 -outputDirectory "$Env:ProgramFiles\WindowsPowerShell\Modules\."
         nuget install PSScriptAnalyzer -source https://www.powershellgallery.com/api/v2 -outputDirectory "$Env:ProgramFiles\WindowsPowerShell\Modules\."
     } Else {
         Install-PackageProvider Nuget -Force | Out-Null
         Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-        Install-Module -Name Pester -Force
-        Install-Module -Name PSScriptAnalyzer -Force
+        Install-Module -Name Pester, platyPS, PSScriptAnalyzer -Force
     }
 }
 
