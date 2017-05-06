@@ -1,8 +1,8 @@
 # This script will invoke pester tests
 # It should invoke on PowerShell v3 and later
 # We serialize XML results and pull them in appveyor.yml
-
 #If Finalize is specified, we collect XML output, upload tests, and indicate build errors
+
 param(
     [switch]$Install,
     [switch]$Test,
