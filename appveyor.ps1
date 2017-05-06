@@ -48,6 +48,7 @@ If ($Test) {
     }
 }
 If ($Build) {
+    Import-Module $ProjectRoot\PS7Zip -Force -ErrorAction SilentlyContinue
     New-MarkdownHelp -Module PS7Zip -OutputFolder "$ProjectRoot\PS7Zip\docs"
 }
 
