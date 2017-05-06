@@ -6,8 +6,9 @@
 param(
     [switch]$Install,
     [switch]$Test,
-    [switch]$Finalize,
-    [switch]$Deploy
+    [switch]$Build,
+    [switch]$Deploy,
+    [switch]$Finalize
 )
 
 #Initialize some variables, move to the project root
@@ -52,6 +53,24 @@ If ($Build) {
     New-MarkdownHelp -Module PS7Zip -OutputFolder "$ProjectRoot\PS7Zip\docs"
 }
 
+#Run a test with the current version of PowerShell, upload results
+If ($Deploy) {
+    Update-ModuleManifest -Path "$ProjectRoot\PS7Zip\PS7Zip.psd1" -ModuleVersion "$env:APPVEYOR_BUILD_VERSION"
+    Import-Module $ProjectRoot\PS7Zip -Force -ErrorAction SilentlyContinue
+    
+    [Version]$PS7ZipGalleryVersion = Find-Package PS7Zip -ErrorAction Stop | Select-Object -ExpandProperty Version
+    [Version]$PS7ZipLocalVersion = Get-Module PS7Zip -ErrorAction Stop | Select-Object -ExpandProperty Version
+    
+    If (($PS7ZipLocalVersion.Major -gt $PS7ZipGalleryVersion.Major) -or ($PS7ZipLocalVersion.Minor -gt $PS7ZipGalleryVersion.Minor)) {
+        Write-Output "Deploying $PS7ZipLocalVersion to the PowerShell Gallery"
+        Publish-Module -Path "$ProjectRoot\PS7Zip" -NuGetApiKey "$env:NuGetApiKey"
+    }
+    
+    Compress-Archive -Path "$ProjectRoot\PS7Zip" -DestinationPath "$ProjectRoot\PS7Zip-$PS7ZipLocalVersion.zip"
+    
+    Push-AppveyorArtifact "$ProjectRoot\PS7Zip-$PS7ZipLocalVersion.zip"
+}
+
 #If finalize is specified, display errors and fail build if we ran into any
 If ($Finalize) {
     #Show status...
@@ -88,22 +107,4 @@ If ($Finalize) {
 
             throw "$FailedCount tests failed."
         }
-}
-
-#Run a test with the current version of PowerShell, upload results
-If ($Deploy) {
-    Update-ModuleManifest -Path "$ProjectRoot\PS7Zip\PS7Zip.psd1" -ModuleVersion "$env:APPVEYOR_BUILD_VERSION"
-    Import-Module $ProjectRoot\PS7Zip -Force -ErrorAction SilentlyContinue
-    
-    [Version]$PS7ZipGalleryVersion = Find-Package PS7Zip -ErrorAction Stop | Select-Object -ExpandProperty Version
-    [Version]$PS7ZipLocalVersion = Get-Module PS7Zip -ErrorAction Stop | Select-Object -ExpandProperty Version
-    
-    If (($PS7ZipLocalVersion.Major -gt $PS7ZipGalleryVersion.Major) -or ($PS7ZipLocalVersion.Minor -gt $PS7ZipGalleryVersion.Minor)) {
-        Write-Output "Deploying $PS7ZipLocalVersion to the PowerShell Gallery"
-        Publish-Module -Path "$ProjectRoot\PS7Zip" -NuGetApiKey "$env:NuGetApiKey"
-    }
-    
-    Compress-Archive -Path "$ProjectRoot\PS7Zip" -DestinationPath "$ProjectRoot\PS7Zip-$PS7ZipLocalVersion.zip"
-    
-    Push-AppveyorArtifact "$ProjectRoot\PS7Zip-$PS7ZipLocalVersion.zip"
 }
