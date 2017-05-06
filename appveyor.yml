@@ -13,6 +13,8 @@ environment:
 skip_commits:
   message: /.(md|yml)/
 
+build: false
+
 install:
   - ps: . .\appveyor.ps1 -Install
 
