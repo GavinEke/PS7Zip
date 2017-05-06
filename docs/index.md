@@ -1,5 +1,3 @@
-# PS7Zip
-
 ## Help Files
 
 - [Compress-7Zip](/PS7Zip/Compress-7Zip)
