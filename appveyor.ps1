@@ -47,6 +47,10 @@ If ($Test) {
     If ($env:APPVEYOR_JOB_ID) {
         (New-Object 'System.Net.WebClient').UploadFile( $Address, "$ProjectRoot\$TestFile" )
     }
+    
+    # Test Alternative Install
+    iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/GavinEke/PS7Zip/master/install.ps1'))
+    Get-Module -Name PS7Zip -ListAvailable
 }
 If ($Build) {
     Import-Module $ProjectRoot\PS7Zip -Force -ErrorAction SilentlyContinue
