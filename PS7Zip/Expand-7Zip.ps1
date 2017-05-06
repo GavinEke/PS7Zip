@@ -21,7 +21,7 @@
     .LINK
     http://gavineke.com/PS7Zip/Expand-7Zip
     #>
-    [CmdletBinding()]
+    [CmdletBinding(HelpUri='http://gavineke.com/PS7Zip/Expand-7Zip')]
     Param(
         [Parameter(Mandatory=$True,Position=1,ValueFromPipelineByPropertyName=$True)]
         [ValidateScript({Test-Path $_})]
