@@ -48,7 +48,7 @@ If ($Test) {
     }
 }
 If ($Build) {
-    New-MarkdownHelp -Module PS7Zip -OutputFolder .\docs
+    New-MarkdownHelp -Module PS7Zip -OutputFolder "$ProjectRoot\PS7Zip\docs"
 }
 
 #If finalize is specified, display errors and fail build if we ran into any
