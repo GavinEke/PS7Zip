@@ -19,9 +19,12 @@ install:
 build: false
 
 test_script:
-# Test with native PS version
+# Test with native PS version and version 2
   - ps: . .\appveyor.ps1 -Test
-  - ps: powershell.exe -Version 2 -NoProfile -ExecutionPolicy Bypass -File ".\appveyor.ps1 -Test"
+  - ps: powershell.exe -Version 2 -NoProfile -ExecutionPolicy Bypass -File .\appveyor.ps1 -Test
+
+# Build pass - make markdown docs
+  - ps: . .\appveyor.ps1 -Build
 
 # Finalize pass - collect and upload results
   - ps: . .\appveyor.ps1 -Finalize
