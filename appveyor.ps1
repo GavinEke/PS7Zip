@@ -47,6 +47,9 @@ If ($Test) {
         (New-Object 'System.Net.WebClient').UploadFile( $Address, "$ProjectRoot\$TestFile" )
     }
 }
+If ($Build) {
+    New-MarkdownHelp -Module PS7Zip -OutputFolder .\docs
+}
 
 #If finalize is specified, display errors and fail build if we ran into any
 If ($Finalize) {
