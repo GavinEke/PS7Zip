@@ -102,7 +102,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = '* 7za.exe binary file updated to 16.04        '
+        ReleaseNotes = '* 7za.exe binary file updated to 16.04'
 
     } # End of PSData hashtable
 
