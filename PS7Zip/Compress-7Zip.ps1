@@ -27,6 +27,8 @@
     The type of archive you would like. Valid types 7Z, GZIP, ZIP, BZIP2, TAR.
     .PARAMETER Remove
     If $True this will remove the uncompressed version of the file or folder only leaving the compressed archive.
+    .LINK
+    http://gavineke.com/PS7Zip/Compress-7Zip
     #>
     [CmdletBinding()]
     Param(
