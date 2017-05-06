@@ -16,6 +16,8 @@
     
     .PARAMETER FullName
     The full path of the compressed archive file.
+    .LINK
+    http://gavineke.com/PS7Zip/Get-7Zip
     #>
     [CmdletBinding()]
     Param(
