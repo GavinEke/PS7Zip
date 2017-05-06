@@ -21,6 +21,7 @@ build: false
 test_script:
 # Test with native PS version
   - ps: . .\appveyor.ps1 -Test
+  - ps: powershell.exe -Version 2 -NoProfile -ExecutionPolicy Bypass -File ".\appveyor.ps1 -Test"
 
 # Finalize pass - collect and upload results
   - ps: . .\appveyor.ps1 -Finalize
