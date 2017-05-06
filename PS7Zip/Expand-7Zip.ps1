@@ -18,6 +18,8 @@
     The full path of the compressed archive file.
     .PARAMETER Remove
     If $True this will remove the compressed version of the file only leaving the uncompressed contents.
+    .LINK
+    http://gavineke.com/PS7Zip/Expand-7Zip
     #>
     [CmdletBinding()]
     Param(
