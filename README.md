@@ -2,7 +2,7 @@
 
 # PS7Zip
 
-Powershell module that allows you to work with compressed archives (PS 3.0+)
+Powershell module that allows you to work with compressed archives (PS 3.0+). Online Help Files - http://gavineke.com/PS7Zip/
 
 ## Installing
 
@@ -16,7 +16,7 @@ Alternatively run the following command from PowerShell
 
 ## Contribute
 
-Please submit an issue on GitHub or if you know how to fix it please submit a pull request
+Please submit an issue on GitHub or if you know how to fix it please submit a pull request.
 
 ## Notes
 
