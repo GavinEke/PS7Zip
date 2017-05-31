@@ -7,6 +7,7 @@ param(
     [switch]$Install,
     [switch]$Test,
     [switch]$DockerTest,
+    [switch]$BetaTest,
     [switch]$Build,
     [switch]$Deploy,
     [switch]$Finalize
@@ -56,15 +57,17 @@ If ($Test) {
 
 If ($DockerTest) {
     Set-Location "$ProjectRoot\Docker"
-    docker build -t test1 -f NanoServer.Dockerfile .
-    #docker build -t test2 -f WindowsServerCore.Dockerfile .
-    #docker build -t test3 -f PS6_NanoServer.Dockerfile .
-    #docker build -t test4 -f PS6_WindowsServerCore.Dockerfile .
-    docker run test1
-    #docker run test2
-    #docker run test3
-    #docker run test4
+    docker build -t nano -f NanoServer.Dockerfile .
+    docker run nano
     Set-Location "$ProjectRoot"
+}
+
+If ($BetaTest) {
+    $POWERSHELL6_MSI = "https://github.com/PowerShell/PowerShell/releases/download/v6.0.0-beta.1/PowerShell-6.0.0-beta.1-win10-win2016-x64.msi"
+    Start-Process -FilePath msiexec.exe -ArgumentList '-qn','-i c:\PowerShell-win10-x64.msi','-norestart' -wait
+    $psexe=Get-Item -Path $Env:ProgramFiles\PowerShell\*\powershell.exe
+    New-Item -Type SymbolicLink -Path $Env:ProgramFiles\PowerShell\ -Name latest -Value $psexe.DirectoryName
+    & "C:\Program Files\PowerShell\latest\PowerShell.exe" -Command Invoke-Pester @Verbose -Path "$ProjectRoot\PS7Zip\Tests"
 }
 
 If ($Build) {
