@@ -57,9 +57,9 @@ If ($Test) {
 If ($DockerTest) {
     Set-Location "$ProjectRoot\Docker"
     docker build -t test1 -f NanoServer.Dockerfile .
-    docker build -t test2 -f WindowServerCore.Dockerfile .
+    docker build -t test2 -f WindowsServerCore.Dockerfile .
     docker build -t test3 -f PS6_NanoServer.Dockerfile .
-    docker build -t test4 -f PS6_WindowServerCore.Dockerfile .
+    docker build -t test4 -f PS6_WindowsServerCore.Dockerfile .
     docker run test1
     docker run test2
     docker run test3
