@@ -6,6 +6,7 @@
 param(
     [switch]$Install,
     [switch]$Test,
+    [switch]$DockerTest,
     [switch]$Build,
     [switch]$Deploy,
     [switch]$Finalize
@@ -52,6 +53,19 @@ If ($Test) {
     iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/GavinEke/PS7Zip/master/install.ps1'))
     Get-Module -Name PS7Zip -ListAvailable
 }
+
+If ($DockerTest) {
+    Set-Location "$ProjectRoot\Docker"
+    docker build -t test1 -f NanoServer.Dockerfile .
+    docker build -t test2 -f WindowServerCore.Dockerfile .
+    docker build -t test3 -f PS6_NanoServer.Dockerfile .
+    docker build -t test4 -f PS6_WindowServerCore.Dockerfile .
+    docker run test1
+    docker run test2
+    docker run test3
+    docker run test4
+}
+
 If ($Build) {
     Import-Module $ProjectRoot\PS7Zip -Force -ErrorAction SilentlyContinue
     New-MarkdownHelp -Module PS7Zip -OutputFolder "$ProjectRoot\PS7Zip\docs"
