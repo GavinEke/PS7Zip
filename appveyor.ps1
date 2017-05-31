@@ -64,6 +64,7 @@ If ($DockerTest) {
     docker run test2
     docker run test3
     docker run test4
+    Set-Location "$ProjectRoot"
 }
 
 If ($Build) {
