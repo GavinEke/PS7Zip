@@ -30,7 +30,7 @@ If ($Install) {
     If ($PSVersionTable.PSVersion -ge [Version]'5.0') {
         Install-PackageProvider Nuget -Force | Out-Null
         Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-        Install-Module -Name Pester, platyPS, PSScriptAnalyzer -Force
+        Install-Module -Name Pester, platyPS, PSScriptAnalyzer -SkipPublisherCheck -Force
     } Else {
         nuget install Pester -source https://www.powershellgallery.com/api/v2 -outputDirectory "$Env:ProgramFiles\WindowsPowerShell\Modules\."
         nuget install platyPS -source https://www.powershellgallery.com/api/v2 -outputDirectory "$Env:ProgramFiles\WindowsPowerShell\Modules\."
