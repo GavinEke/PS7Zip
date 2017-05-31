@@ -21,6 +21,7 @@ install:
 test_script:
 # Test with native PS version
   - ps: . .\appveyor.ps1 -Test
+  - ps: . .\appveyor.ps1 -DockerTest
 #  - ps: powershell.exe -Version 2 -File .\appveyor.ps1 -Test
 
 after_test:
