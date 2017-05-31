@@ -64,7 +64,8 @@ If ($DockerTest) {
 
 If ($BetaTest) {
     $POWERSHELL6_MSI = "https://github.com/PowerShell/PowerShell/releases/download/v6.0.0-beta.1/PowerShell-6.0.0-beta.1-win10-win2016-x64.msi"
-    Start-Process -FilePath msiexec.exe -ArgumentList '-qn','-i c:\PowerShell-win10-x64.msi','-norestart' -wait
+    Invoke-WebRequest -Uri "$POWERSHELL6_MSI" -UseBasicParsing -OutFile "C:\PowerShell-win10-x64.msi"
+    Start-Process -FilePath msiexec.exe -ArgumentList '-qn','-i C:\PowerShell-win10-x64.msi','-norestart' -wait
     $psexe=Get-Item -Path $Env:ProgramFiles\PowerShell\*\powershell.exe
     New-Item -Type SymbolicLink -Path $Env:ProgramFiles\PowerShell\ -Name latest -Value $psexe.DirectoryName
     & "C:\Program Files\PowerShell\latest\PowerShell.exe" -Command Invoke-Pester @Verbose -Path "$ProjectRoot\PS7Zip\Tests"
