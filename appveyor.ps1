@@ -59,7 +59,7 @@ If ($Test) {
 If ($DockerTest) {
     Set-Location "$ProjectRoot\Docker"
     docker build -t nano -f NanoServer.Dockerfile .
-    docker run -v C:/projects:C:/Pester nano
+    docker run nano
     Set-Location "$ProjectRoot"
 }
 
