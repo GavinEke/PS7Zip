@@ -18,6 +18,7 @@ $ProjectRoot = $ENV:APPVEYOR_BUILD_FOLDER
 $Timestamp = Get-Date -uformat "%Y%m%d-%H%M%S"
 $PSVersion = $PSVersionTable.PSVersion.ToString()
 $TestFile = "TestResults_PS$PSVersion`_$TimeStamp.xml"
+Write-Host "$ProjectRoot"
 
 $Address = "https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)"
 Set-Location $ProjectRoot
@@ -58,7 +59,7 @@ If ($Test) {
 If ($DockerTest) {
     Set-Location "$ProjectRoot\Docker"
     docker build -t nano -f NanoServer.Dockerfile .
-    docker run -v $($ProjectRoot):C:\Pester nano
+    docker run -v /projects:/Pester nano
     Set-Location "$ProjectRoot"
 }
 
