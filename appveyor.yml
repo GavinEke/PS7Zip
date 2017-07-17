@@ -30,8 +30,9 @@ after_test:
   - ps: . .\appveyor.ps1 -Build
 
 deploy_script:
-  - ps: If ($PSVersionTable.PSVersion.Major -ge 5) {. .\appveyor.ps1 -Deploy}
-
+  - ps: Invoke-AppVeyorDeploy -DeployToGallery
+  - ps: Invoke-AppVeyorDeploy -DeployToArtifacts
+  
 on_finish:
 # Finalize pass - collect and upload results
   - ps: . .\appveyor.ps1 -Finalize
