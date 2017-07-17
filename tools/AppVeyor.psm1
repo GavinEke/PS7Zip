@@ -10,7 +10,6 @@ Write-Host -ForegroundColor Yellow -Object "Project Name is $ProjectName"
 Write-Host -ForegroundColor Yellow -Object "AppVeyor Job ID is $env:APPVEYOR_JOB_ID"
 
 Function Invoke-AppVeyorInstall {
-    Write-Host -ForegroundColor Magenta -Object "Invoke-AppVeyorInstall"
     If ($PSVersionTable.PSVersion -ge [Version]'5.0') {
         [void]$(Install-PackageProvider Nuget -Force)
         Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
@@ -30,19 +29,20 @@ Function Invoke-AppVeyorTest {
         [switch]$PSCoreTest,
         [switch]$AltInstallTest
     )
-    Write-Host -ForegroundColor Magenta -Object "Invoke-AppVeyorTest"
     If ($NormalTest) {
         Write-Host -ForegroundColor Yellow -Object "Running Normal Test"
 
         Import-Module Pester
-        Invoke-Pester @Verbose -Path "$ProjectRoot\$ProjectName\Tests" -OutputFormat NUnitXml -OutputFile "$ProjectRoot\$TestFile" -PassThru | Export-Clixml -Path "$ProjectRoot\PesterResults_PS$PSVersion`_$Timestamp.xml"
+        Invoke-Pester @Verbose -Path "$ProjectRoot\$ProjectName\Tests" -OutputFormat NUnitXml -OutputFile "$ProjectRoot\TestResults_NormalTest.xml" -PassThru | Export-Clixml -Path "$ProjectRoot\PesterResults_NormalTest.xml"
     }
 
     If ($DockerTest) {
         Write-Host -ForegroundColor Yellow -Object "Running Docker Test"
 
-        docker build -t nano -f $ProjectRoot\Docker\NanoServer.Dockerfile .
+        Set-Location "$ProjectRoot\Docker"
+        docker build -t nano -f NanoServer.Dockerfile .
         docker run nano
+        Set-Location "$ProjectRoot"
     }
 
     If ($PSCoreTest) {
