@@ -16,14 +16,14 @@ skip_commits:
 build: false
 
 install:
-  - ps: . .\appveyor.ps1 -Install
+  - ps: Import-Module .\tools\Appveyor.psm1
+  - ps: Invoke-AppveyorInstall
 
 test_script:
-# Test with native PS version
-  - ps: . .\appveyor.ps1 -Test
-#  - ps: powershell.exe -Version 2 -File .\appveyor.ps1 -Test
-  - ps: . .\appveyor.ps1 -DockerTest
-  - ps: . .\appveyor.ps1 -BetaTest
+  - ps: Invoke-AppveyorTest -NormalTest
+  - ps: Invoke-AppveyorTest -DockerTest
+  - ps: Invoke-AppveyorTest -PSCoreTest
+  - ps: Invoke-AppveyorTest -AltInstallTest
 
 after_test:
 # Build pass - make markdown docs
