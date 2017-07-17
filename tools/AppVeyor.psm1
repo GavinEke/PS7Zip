@@ -76,7 +76,7 @@ Function Invoke-AppVeyorDeploy {
         [switch]$DeployToArtifacts
     )
     Update-ModuleManifest -Path "$ProjectRoot\$ProjectName\$ProjectName.psd1" -ModuleVersion "$env:APPVEYOR_BUILD_VERSION"
-    Import-Module -Path "$ProjectRoot\$ProjectName" -Force -ErrorAction SilentlyContinue
+    Import-Module "$ProjectRoot\$ProjectName" -Force -ErrorAction SilentlyContinue
     
     If ($DeployToGallery) {
         Write-Host -ForegroundColor Yellow -Object "Deploying to PSGallery"
