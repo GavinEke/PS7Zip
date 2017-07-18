@@ -26,7 +26,8 @@ test_script:
   - ps: Invoke-AppveyorTest -AltInstallTest
 
 after_test:
-# Build pass - make markdown docs
+  - ps: Update-AppVeyorTestResults -TestFile ".\TestResults_NormalTest.xml"
+  - ps: Update-AppVeyorTestResults -TestFile ".\TestResults_PSCoreTest.xml"
   - ps: . .\appveyor.ps1 -Build
 
 deploy_script:
