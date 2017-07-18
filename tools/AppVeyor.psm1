@@ -83,7 +83,7 @@ Function Update-AppVeyorTestResults {
     }
 }
 
-Function Invoke-AppVeyorBuild {
+Function Invoke-AppVeyorBuildDocs {
     Import-Module -Path "$ProjectRoot\$ProjectName" -Force -ErrorAction SilentlyContinue
     New-MarkdownHelp -Module $ProjectName -OutputFolder "$ProjectRoot\$ProjectName\docs"
 }
@@ -114,5 +114,37 @@ Function Invoke-AppVeyorDeploy {
         Write-Host -ForegroundColor Yellow -Object "Deploying to AppVeyor Artifacts"
         Compress-Archive -Path "$ProjectRoot\$ProjectName" -DestinationPath "$ProjectRoot\$ProjectName-$LocalVersion.zip"
         Push-AppveyorArtifact "$ProjectRoot\$ProjectName-$LocalVersion.zip"
+    }
+}
+
+Function Invoke-AppveyorFinish {
+    $AllFiles = Get-ChildItem -Path $ProjectRoot\PesterResults*.xml | Select -ExpandProperty FullName
+    Write-Host -ForegroundColor Yellow -Object "Collecting Files $AllFiles"
+
+    $Results = @( Get-ChildItem -Path "$ProjectRoot\PesterResults_PS*.xml" | Import-Clixml )
+
+    $FailedCount = $Results |
+        Select -ExpandProperty FailedCount |
+        Measure-Object -Sum |
+        Select -ExpandProperty Sum
+
+    If ($FailedCount -gt 0) {
+
+        $FailedItems = $Results |
+            Select -ExpandProperty TestResult |
+            Where {$_.Passed -notlike $True}
+
+        Write-Host -ForegroundColor Yellow -Object "Failed Tests"
+        $FailedItems | ForEach-Object {
+            $Item = $_
+            [pscustomobject]@{
+                Describe = $Item.Describe
+                Context = $Item.Context
+                Name = "It $($Item.Name)"
+                Result = $Item.Result
+            }
+        } | Sort Describe, Context, Name, Result | Format-List
+
+        throw "$FailedCount tests failed."
     }
 }
