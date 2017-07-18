@@ -28,7 +28,7 @@ test_script:
 after_test:
   - ps: Update-AppVeyorTestResults -TestFile ".\TestResults_NormalTest.xml"
   - ps: Update-AppVeyorTestResults -TestFile ".\TestResults_PSCoreTest.xml"
-  - ps: . .\appveyor.ps1 -Build
+  - ps: Invoke-AppVeyorBuildDocs
 
 deploy_script:
   - ps: Invoke-AppVeyorDeploy -DeployToGallery
@@ -36,4 +36,4 @@ deploy_script:
   
 on_finish:
 # Finalize pass - collect and upload results
-  - ps: . .\appveyor.ps1 -Finalize
+  - ps: Invoke-AppveyorFinish
