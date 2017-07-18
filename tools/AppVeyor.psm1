@@ -64,6 +64,20 @@ Function Invoke-AppVeyorTest {
     }
 }
 
+Function Update-AppVeyorTestResults {
+    Param(
+        [Parameter(Mandatory=$True)]
+        [ValidateScript({Test-Path $_ })]
+        [string] $TestFile
+    )
+    Try {
+        (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", $TestFile)
+    }
+    Catch {
+        Write-Warning "Failed to push test file."
+    }
+}
+
 Function Invoke-AppVeyorBuild {
     Import-Module -Path "$ProjectRoot\$ProjectName" -Force -ErrorAction SilentlyContinue
     New-MarkdownHelp -Module $ProjectName -OutputFolder "$ProjectRoot\$ProjectName\docs"
