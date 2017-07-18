@@ -6,8 +6,13 @@ Write-Host -ForegroundColor Yellow -Object "PowerShell Version is $($PSVersionTa
 
 Function Invoke-AppVeyorInstall {
     If ($PSVersionTable.PSVersion -ge [Version]'5.0') {
+        Write-Host -ForegroundColor Yellow -Object "Installing Nuget..."
         [void]$(Install-PackageProvider Nuget -Force)
+        
+        Write-Host -ForegroundColor Yellow -Object "Marking PSGallery as trusted..."
         Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+        
+        Write-Host -ForegroundColor Yellow -Object "Installing prereq modules..."
         Install-Module -Name Pester, platyPS, PSScriptAnalyzer -SkipPublisherCheck -Force
     } Else {
         nuget install Pester -source https://www.powershellgallery.com/api/v2 -outputDirectory "$Env:ProgramFiles\WindowsPowerShell\Modules\."
@@ -22,7 +27,7 @@ Function Invoke-AppVeyorInstall {
 
 Function Invoke-AppVeyorTest {
     [CmdletBinding()]
-    param(
+    Param(
         [switch]$NormalTest,
         [switch]$DockerTest,
         [switch]$PSCoreTest,
@@ -65,6 +70,7 @@ Function Invoke-AppVeyorTest {
 }
 
 Function Update-AppVeyorTestResults {
+    [CmdletBinding()]
     Param(
         [Parameter(Mandatory=$True)]
         [ValidateScript({Test-Path $_ })]
@@ -72,8 +78,7 @@ Function Update-AppVeyorTestResults {
     )
     Try {
         (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", $TestFile)
-    }
-    Catch {
+    } Catch {
         Write-Warning "Failed to push test file."
     }
 }
@@ -85,7 +90,7 @@ Function Invoke-AppVeyorBuild {
 
 Function Invoke-AppVeyorDeploy {
     [CmdletBinding()]
-    param(
+    Param(
         [switch]$DeployToGallery,
         [switch]$DeployToArtifacts
     )
