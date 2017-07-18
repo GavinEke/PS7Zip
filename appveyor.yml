@@ -26,8 +26,8 @@ test_script:
   - ps: Invoke-AppveyorTest -AltInstallTest
 
 after_test:
-  - ps: Update-AppVeyorTestResults -TestFile ".\TestResults_NormalTest.xml"
-  - ps: Update-AppVeyorTestResults -TestFile ".\TestResults_PSCoreTest.xml"
+  - ps: Update-AppVeyorTestResults -TestFile "$env:APPVEYOR_BUILD_FOLDER\TestResults_NormalTest.xml"
+  - ps: Update-AppVeyorTestResults -TestFile "$env:APPVEYOR_BUILD_FOLDER\TestResults_PSCoreTest.xml"
   - ps: Invoke-AppVeyorBuildDocs
 
 deploy_script:
