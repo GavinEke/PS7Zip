@@ -84,7 +84,7 @@ Function Update-AppVeyorTestResults {
 }
 
 Function Invoke-AppVeyorBuildDocs {
-    Import-Module "$ProjectRoot\$ProjectName" -Force -ErrorAction SilentlyContinue
+    Import-Module "$ProjectRoot\$ProjectName" -Global -Force -ErrorAction SilentlyContinue
     New-MarkdownHelp -Module $ProjectName -OutputFolder "$ProjectRoot\$ProjectName\docs"
 }
 
