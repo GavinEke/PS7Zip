@@ -7,7 +7,7 @@ Write-Host -ForegroundColor Yellow -Object "PowerShell Version is $($PSVersionTa
 Function Invoke-AppVeyorInstall {
     If ($PSVersionTable.PSVersion -ge [Version]'5.0') {
         Write-Host -ForegroundColor Yellow -Object "Installing Nuget..."
-        [void]$(Install-PackageProvider Nuget -Force)
+        Install-PackageProvider -Name NuGet -RequiredVersion 2.8.5.201 -Force
         
         Write-Host -ForegroundColor Yellow -Object "Marking PSGallery as trusted..."
         Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
