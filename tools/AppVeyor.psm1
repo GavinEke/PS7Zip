@@ -115,7 +115,7 @@ Function Invoke-AppVeyorDeploy {
     
     If ($DeployToArtifacts) {
         Write-Host -ForegroundColor Yellow -Object "[$($(Get-Date) - $BeginTime)] Deploying to AppVeyor Artifacts"
-        Compress-Archive -Path "$ProjectRoot\$ProjectName" -DestinationPath "$ProjectRoot\$ProjectName-$LocalVersion.zip"
+        Compress-Archive -Path "$ProjectRoot\$ProjectName" -DestinationPath "$ProjectRoot\$ProjectName-$env:APPVEYOR_BUILD_VERSION.zip"
         Push-AppveyorArtifact "$ProjectRoot\$ProjectName-$env:APPVEYOR_BUILD_VERSION.zip"
     }
 }
