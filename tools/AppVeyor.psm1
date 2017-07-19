@@ -7,13 +7,13 @@ Write-Host -ForegroundColor Yellow -Object "PowerShell Version is $($PSVersionTa
 
 Function Invoke-AppVeyorInstall {
     If ($PSVersionTable.PSVersion -ge [Version]'5.0') {
-        Write-Host -ForegroundColor Yellow -Object "[($((Get-Date - $BeginTime).ToString())] Installing Nuget"
+        Write-Host -ForegroundColor Yellow -Object "[$($(Get-Date) - $BeginTime)] Installing Nuget"
         Install-PackageProvider -Name NuGet -RequiredVersion 2.8.5.201 -Force
         
-        Write-Host -ForegroundColor Yellow -Object "[($((Get-Date - $BeginTime).ToString())] Marking PSGallery as trusted"
+        Write-Host -ForegroundColor Yellow -Object "[$($(Get-Date) - $BeginTime)] Marking PSGallery as trusted"
         Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
         
-        Write-Host -ForegroundColor Yellow -Object "[($((Get-Date - $BeginTime).ToString())] Installing prereq modules"
+        Write-Host -ForegroundColor Yellow -Object "[$($(Get-Date) - $BeginTime)] Installing prereq modules"
         Install-Module -Name Pester, platyPS, PSScriptAnalyzer -SkipPublisherCheck -Force
     } Else {
         nuget install Pester -source https://www.powershellgallery.com/api/v2 -outputDirectory "$Env:ProgramFiles\WindowsPowerShell\Modules\."
@@ -35,14 +35,14 @@ Function Invoke-AppVeyorTest {
         [switch]$AltInstallTest
     )
     If ($NormalTest) {
-        Write-Host -ForegroundColor Yellow -Object "[($((Get-Date - $BeginTime).ToString())] Running Normal Test"
+        Write-Host -ForegroundColor Yellow -Object "[$($(Get-Date) - $BeginTime)] Running Normal Test"
 
         Import-Module Pester
         Invoke-Pester @Verbose -Path "$ProjectRoot\$ProjectName\Tests" -OutputFormat NUnitXml -OutputFile "$ProjectRoot\TestResults_NormalTest.xml" -PassThru | Export-Clixml -Path "$ProjectRoot\PesterResults_NormalTest.xml"
     }
 
     If ($DockerTest) {
-        Write-Host -ForegroundColor Yellow -Object "[($((Get-Date - $BeginTime).ToString())] Running Docker Test"
+        Write-Host -ForegroundColor Yellow -Object "[$($(Get-Date) - $BeginTime)] Running Docker Test"
 
         Set-Location "$ProjectRoot\Docker"
         docker build -t nano -f NanoServer.Dockerfile .
@@ -51,7 +51,7 @@ Function Invoke-AppVeyorTest {
     }
 
     If ($PSCoreTest) {
-        Write-Host -ForegroundColor Yellow -Object "[($((Get-Date - $BeginTime).ToString())] Running PSCore Test"
+        Write-Host -ForegroundColor Yellow -Object "[$($(Get-Date) - $BeginTime)] Running PSCore Test"
 
         $PSCore_MSI = "https://github.com/PowerShell/PowerShell/releases/download/v6.0.0-beta.4/PowerShell-6.0.0-beta.4-win10-win2016-x64.msi"
         Invoke-WebRequest -Uri "$PSCore_MSI" -UseBasicParsing -OutFile "C:\PowerShell-win10-x64.msi"
@@ -62,7 +62,7 @@ Function Invoke-AppVeyorTest {
     }
 
     If ($AltInstallTest) {
-        Write-Host -ForegroundColor Yellow -Object "[($((Get-Date - $BeginTime).ToString())] Running Alternative Install Test"
+        Write-Host -ForegroundColor Yellow -Object "[$($(Get-Date) - $BeginTime)] Running Alternative Install Test"
 
         Invoke-Expression ((New-Object net.webclient).DownloadString("https://raw.githubusercontent.com/$env:APPVEYOR_ACCOUNT_NAME/$ProjectName/master/install.ps1"))
         Test-ModuleManifest -Path "$env:USERPROFILE\Documents\WindowsPowerShell\Modules\$ProjectName\$ProjectName.psd1"
@@ -77,7 +77,7 @@ Function Update-AppVeyorTestResults {
         [ValidateScript({Test-Path $_ })]
         [string] $TestFile
     )
-    Write-Host -ForegroundColor Yellow -Object "[($((Get-Date - $BeginTime).ToString())] Uploading Test Results to AppVeyor"
+    Write-Host -ForegroundColor Yellow -Object "[$($(Get-Date) - $BeginTime)] Uploading Test Results to AppVeyor"
     Try {
         (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", $TestFile)
     } Catch {
@@ -86,7 +86,7 @@ Function Update-AppVeyorTestResults {
 }
 
 Function Invoke-AppVeyorBuildDocs {
-    Write-Host -ForegroundColor Yellow -Object "[($((Get-Date - $BeginTime).ToString())] Creating Help Files"
+    Write-Host -ForegroundColor Yellow -Object "[$($(Get-Date) - $BeginTime)] Creating Help Files"
     Import-Module "$ProjectRoot\$ProjectName" -Global -Force -ErrorAction SilentlyContinue
     New-MarkdownHelp -Module $ProjectName -OutputFolder "$ProjectRoot\$ProjectName\docs"
 }
@@ -101,7 +101,7 @@ Function Invoke-AppVeyorDeploy {
     Import-Module "$ProjectRoot\$ProjectName" -Force -ErrorAction SilentlyContinue
     
     If ($DeployToGallery) {
-        Write-Host -ForegroundColor Yellow -Object "[($((Get-Date - $BeginTime).ToString())] Deploying to PSGallery"
+        Write-Host -ForegroundColor Yellow -Object "[$($(Get-Date) - $BeginTime)] Deploying to PSGallery"
         If ($PSVersionTable.PSVersion.Major -ge 5) {
             [Version]$GalleryVersion = Find-Package $ProjectName -ErrorAction Stop | Select-Object -ExpandProperty Version
             [Version]$LocalVersion = Get-Module $ProjectName -ErrorAction Stop | Select-Object -ExpandProperty Version
@@ -114,14 +114,14 @@ Function Invoke-AppVeyorDeploy {
     }
     
     If ($DeployToArtifacts) {
-        Write-Host -ForegroundColor Yellow -Object "[($((Get-Date - $BeginTime).ToString())] Deploying to AppVeyor Artifacts"
+        Write-Host -ForegroundColor Yellow -Object "[$($(Get-Date) - $BeginTime)] Deploying to AppVeyor Artifacts"
         Compress-Archive -Path "$ProjectRoot\$ProjectName" -DestinationPath "$ProjectRoot\$ProjectName-$LocalVersion.zip"
         Push-AppveyorArtifact "$ProjectRoot\$ProjectName-$LocalVersion.zip"
     }
 }
 
 Function Invoke-AppveyorFinish {
-    Write-Host -ForegroundColor Yellow -Object "[($((Get-Date - $BeginTime).ToString())] Finalizing AppVeyor"
+    Write-Host -ForegroundColor Yellow -Object "[$($(Get-Date) - $BeginTime)] Finalizing AppVeyor"
     $AllFiles = Get-ChildItem -Path $ProjectRoot\PesterResults*.xml | Select -ExpandProperty FullName
 
     $Results = @( Get-ChildItem -Path "$ProjectRoot\PesterResults_PS*.xml" | Import-Clixml )
