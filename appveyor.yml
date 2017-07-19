@@ -12,6 +12,9 @@ skip_commits:
 
 build: false
 
+cache:
+  - %ProgramFiles%\PackageManagement\ProviderAssemblies\nuget
+
 install:
   - ps: Import-Module .\tools\Appveyor.psm1
   - ps: Invoke-AppveyorInstall
