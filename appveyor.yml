@@ -1,4 +1,3 @@
-# See http://www.appveyor.com/docs/appveyor-yml for many more options
 version: '1.3.{build}.0'
 
 os:
@@ -8,8 +7,6 @@ environment:
   NuGetApiKey:
     secure: SzN/9XuDneoXfDr9MaS6Ugt1Bsj4MqxzcKB45uvBRGrmSozL+83cEfNEYdd/SYc2
 
-# Skip on updates to the readme.
-# We can force this by adding [skip ci] or [ci skip] anywhere in commit message
 skip_commits:
   message: /.(md|yml)/
 
@@ -26,8 +23,6 @@ test_script:
   - ps: Invoke-AppveyorTest -AltInstallTest
 
 after_test:
-  - ps: Update-AppVeyorTestResults -TestFile "$env:APPVEYOR_BUILD_FOLDER\TestResults_NormalTest.xml"
-  - ps: Update-AppVeyorTestResults -TestFile "$env:APPVEYOR_BUILD_FOLDER\TestResults_PSCoreTest.xml"
   - ps: Invoke-AppVeyorBuildDocs
 
 deploy_script:
@@ -35,5 +30,6 @@ deploy_script:
   - ps: Invoke-AppVeyorDeploy -DeployToArtifacts
   
 on_finish:
-# Finalize pass - collect and upload results
+  - ps: Update-AppVeyorTestResults -TestFile "$env:APPVEYOR_BUILD_FOLDER\TestResults_NormalTest.xml"
+  - ps: Update-AppVeyorTestResults -TestFile "$env:APPVEYOR_BUILD_FOLDER\TestResults_PSCoreTest.xml"
   - ps: Invoke-AppveyorFinish
