@@ -155,9 +155,9 @@ Function Invoke-AppveyorFinish {
 }
 
 Function Write-VersionRequirements {
-    Install-Module -Name VersionAnalyzerRules -SkipPublisherCheck -Force
+    Save-Module -Name VersionAnalyzerRules -Path C:\
     
-    $VersionRequirements = Invoke-ScriptAnalyzer -Path "$ProjectRoot\$ProjectName" -Recurse -CustomRulePath "$((Get-Module -ListAvailable -Name VersionAnalyzerRules).ModuleBase)"
+    $VersionRequirements = Invoke-ScriptAnalyzer -Path "$ProjectRoot\$ProjectName" -Recurse -CustomRulePath "C:\VersionAnalyzerRules" -ErrorAction SilentlyContinue
     
     If ($VersionRequirements) {
         If ($VersionRequirements.RuleName.Contains('Test-OS10Command')) {
