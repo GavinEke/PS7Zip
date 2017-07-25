@@ -16,7 +16,7 @@ Function Invoke-AppVeyorInstall {
         Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
         
         Write-Host -ForegroundColor Yellow -Object "[$($(Get-Date) - $BeginTime)] Installing prereq modules"
-        Install-Module -Name Pester, platyPS, PSScriptAnalyzer, VersionAnalyzerRules -SkipPublisherCheck -Force
+        Install-Module -Name Pester, platyPS, PSScriptAnalyzer -SkipPublisherCheck -Force
     } Else {
         nuget install Pester -source https://www.powershellgallery.com/api/v2 -outputDirectory "$Env:ProgramFiles\WindowsPowerShell\Modules\."
         nuget install platyPS -source https://www.powershellgallery.com/api/v2 -outputDirectory "$Env:ProgramFiles\WindowsPowerShell\Modules\."
@@ -155,23 +155,30 @@ Function Invoke-AppveyorFinish {
 }
 
 Function Write-VersionRequirements {
+    Install-Module -Name VersionAnalyzerRules -SkipPublisherCheck -Force
+    
     $VersionRequirements = Invoke-ScriptAnalyzer -Path "$ProjectRoot\$ProjectName" -Recurse -CustomRulePath "$((Get-Module -ListAvailable -Name VersionAnalyzerRules).ModuleBase)"
     
-    If ($VersionRequirements.RuleName.Contains('Test-OS10Command')) {
-        $RequiredOS = 'Windows 10/Windows Server 2016'
-    } ElseIf ($VersionRequirements.RuleName.Contains('Test-OS62Command')) {
-        $RequiredOS = 'Windows 8.1/Windows Server 2012 R2'
+    If ($VersionRequirements) {
+        If ($VersionRequirements.RuleName.Contains('Test-OS10Command')) {
+            $RequiredOS = 'Windows 10/Windows Server 2016'
+        } ElseIf ($VersionRequirements.RuleName.Contains('Test-OS62Command')) {
+            $RequiredOS = 'Windows 8.1/Windows Server 2012 R2'
+        } Else {
+            $RequiredOS = 'Windows 7/Windows Server 2008 R2'
+        }
+
+        If ($VersionRequirements.RuleName.Contains('Test-PowerShellv5Command')) {
+            $RequiredWMF = 'WMF 5'
+        } ElseIf ($VersionRequirements.RuleName.Contains('Test-PowerShellv4Command')) {
+            $RequiredWMF = 'WMF 4'
+        } ElseIf ($VersionRequirements.RuleName.Contains('Test-PowerShellv3Command')) {
+            $RequiredWMF = 'WMF 3'
+        } Else {
+            $RequiredWMF = 'WMF 2'
+        }
     } Else {
         $RequiredOS = 'Windows 7/Windows Server 2008 R2'
-    }
-
-    If ($VersionRequirements.RuleName.Contains('Test-PowerShellv5Command')) {
-        $RequiredWMF = 'WMF 5'
-    } ElseIf ($VersionRequirements.RuleName.Contains('Test-PowerShellv4Command')) {
-        $RequiredWMF = 'WMF 4'
-    } ElseIf ($VersionRequirements.RuleName.Contains('Test-PowerShellv3Command')) {
-        $RequiredWMF = 'WMF 3'
-    } Else {
         $RequiredWMF = 'WMF 2'
     }
 
