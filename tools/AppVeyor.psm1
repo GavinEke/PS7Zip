@@ -153,3 +153,33 @@ Function Invoke-AppveyorFinish {
         throw "$FailedCount tests failed."
     }
 }
+
+Function Write-VersionRequirements {
+    Install-Module -Name VersionAnalyzerRules -RequiredVersion 1.0.0
+    $VersionRequirements = Invoke-ScriptAnalyzer -Path "$ProjectRoot\$ProjectName" -Recurse -CustomRulePath "$Env:ProgramFiles\WindowsPowerShell\Modules\VersionAnalyzerRules\1.0.0" -ErrorAction SilentlyContinue
+    
+    If ($VersionRequirements.RuleName.Contains('Test-OS10Command')) {
+        $RequiredOS = 'Windows 10/Windows Server 2016'
+    } ElseIf ($VersionRequirements.RuleName.Contains('Test-OS62Command')) {
+        $RequiredOS = 'Windows 8.1/Windows Server 2012 R2'
+    } Else {
+        $RequiredOS = 'Windows 7/Windows Server 2008 R2'
+    }
+
+    If ($VersionRequirements.RuleName.Contains('Test-PowerShellv5Command')) {
+        $RequiredWMF = 'WMF 5'
+    } ElseIf ($VersionRequirements.RuleName.Contains('Test-PowerShellv4Command')) {
+        $RequiredWMF = 'WMF 4'
+    } ElseIf ($VersionRequirements.RuleName.Contains('Test-PowerShellv3Command')) {
+        $RequiredWMF = 'WMF 3'
+    } Else {
+        $RequiredWMF = 'WMF 2'
+    }
+
+    Write-Host -Object ("")
+    Write-Host -Object ("The Required OS Version is: ") -NoNewline -ForegroundColor Yellow
+    Write-Host -Object ("$RequiredOS") -ForegroundColor Green
+    Write-Host -Object ("The Required WMF Version is: ") -NoNewline -ForegroundColor Yellow
+    Write-Host -Object ("$RequiredWMF") -ForegroundColor Green
+    Write-Host -Object ("")
+}
