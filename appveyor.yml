@@ -26,6 +26,7 @@ test_script:
   - ps: Invoke-AppveyorTest -AltInstallTest
 
 after_test:
+  - ps: Write-VersionRequirements
   - ps: Invoke-AppVeyorBuildDocs
 
 deploy_script:
