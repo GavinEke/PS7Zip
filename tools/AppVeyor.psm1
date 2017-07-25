@@ -155,7 +155,8 @@ Function Invoke-AppveyorFinish {
 }
 
 Function Write-VersionRequirements {
-    $VersionRequirements = Invoke-ScriptAnalyzer -Path "$ProjectRoot\$ProjectName" -Recurse -CustomRulePath $((Get-Module -ListAvailable -Name VersionAnalyzerRules).ModuleBase) -ErrorAction SilentlyContinue
+    $VersionRequirements = ""
+    $VersionRequirements = Invoke-ScriptAnalyzer -Path "$ProjectRoot" -Recurse -CustomRulePath $((Get-Module -ListAvailable -Name VersionAnalyzerRules).ModuleBase) -ErrorAction SilentlyContinue
     
     If ($VersionRequirements.RuleName.Contains('Test-OS10Command')) {
         $RequiredOS = 'Windows 10/Windows Server 2016'
@@ -175,10 +176,10 @@ Function Write-VersionRequirements {
         $RequiredWMF = 'WMF 2'
     }
 
-    Write-Host -Object ("")
-    Write-Host -Object ("The Required OS Version is: ") -NoNewline -ForegroundColor Yellow
-    Write-Host -Object ("$RequiredOS") -ForegroundColor Green
-    Write-Host -Object ("The Required WMF Version is: ") -NoNewline -ForegroundColor Yellow
-    Write-Host -Object ("$RequiredWMF") -ForegroundColor Green
-    Write-Host -Object ("")
+    Write-Host -Object ""
+    Write-Host -NoNewline -ForegroundColor Yellow -Object "The Required OS Version is: "
+    Write-Host -ForegroundColor Green -Object "$RequiredOS"
+    Write-Host -NoNewline -ForegroundColor Yello -Object "The Required WMF Version is: "
+    Write-Host -ForegroundColor Green -Object "$RequiredWMF"
+    Write-Host -Object ""
 }
