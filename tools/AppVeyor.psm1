@@ -155,7 +155,7 @@ Function Invoke-AppveyorFinish {
 }
 
 Function Write-VersionRequirements {
-    Save-Module -Name VersionAnalyzerRules -Path C:\
+    Save-Module -Name VersionAnalyzerRules -Path C:\ -Force
     
     $VersionRequirements = Invoke-ScriptAnalyzer -Path "$ProjectRoot\$ProjectName" -Recurse -CustomRulePath "C:\VersionAnalyzerRules" -ErrorAction SilentlyContinue
     
