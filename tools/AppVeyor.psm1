@@ -16,7 +16,7 @@ Function Invoke-AppVeyorInstall {
         Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
         
         Write-Host -ForegroundColor Yellow -Object "[$($(Get-Date) - $BeginTime)] Installing prereq modules"
-        Install-Module -Name Pester, platyPS, PSScriptAnalyzer -SkipPublisherCheck -Force
+        Install-Module -Name Pester, platyPS, PSScriptAnalyzer, VersionAnalyzerRules -SkipPublisherCheck -Force
     } Else {
         nuget install Pester -source https://www.powershellgallery.com/api/v2 -outputDirectory "$Env:ProgramFiles\WindowsPowerShell\Modules\."
         nuget install platyPS -source https://www.powershellgallery.com/api/v2 -outputDirectory "$Env:ProgramFiles\WindowsPowerShell\Modules\."
@@ -155,8 +155,7 @@ Function Invoke-AppveyorFinish {
 }
 
 Function Write-VersionRequirements {
-    Install-Module -Name VersionAnalyzerRules -RequiredVersion 1.0.0
-    $VersionRequirements = Invoke-ScriptAnalyzer -Path "$ProjectRoot\$ProjectName" -Recurse -CustomRulePath "$Env:ProgramFiles\WindowsPowerShell\Modules\VersionAnalyzerRules\1.0.0" -ErrorAction SilentlyContinue
+    $VersionRequirements = Invoke-ScriptAnalyzer -Path "$ProjectRoot\$ProjectName" -Recurse -CustomRulePath $((Get-Module -ListAvailable -Name VersionAnalyzerRules).ModuleBase) -ErrorAction SilentlyContinue
     
     If ($VersionRequirements.RuleName.Contains('Test-OS10Command')) {
         $RequiredOS = 'Windows 10/Windows Server 2016'
