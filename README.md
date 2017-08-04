@@ -8,15 +8,13 @@ Powershell module that allows you to work with compressed archives (PS 3.0+). On
 
 | Operating System Version   | Core 6 Beta        | WMF 5.1            | WMF 5.0            | WMF 4.0            | WMF 3.0            | WMF 2.0 |
 |----------------------------|--------------------|--------------------|--------------------|--------------------|--------------------|---------|
-| Windows Nano Server        |                    | :heavy_check_mark: | N/A                | N/A                | N/A                | N/A     |
+| Windows Nano Server        | :x:                | :heavy_check_mark: | N/A                | N/A                | N/A                | N/A     |
 | Windows Server 2016        | :heavy_check_mark: | :heavy_check_mark: | N/A                | N/A                | N/A                | N/A     |
 | Windows 10                 | :heavy_check_mark: | :heavy_check_mark: | :x:                | N/A                | N/A                | N/A     |
-| Windows Server 2012 R2     |                    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | N/A                | N/A     |
-| Windows 8.1                |                    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | N/A                | N/A     |
-| Windows Server 2008 R2 SP1 |                    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x:     |
-| Windows 7 SP1              |                    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x:     |
-
-Systems without a green tick or red cross have not be tested for compatibility and as such are unsupported.
+| Windows Server 2012 R2     | :x:                | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | N/A                | N/A     |
+| Windows 8.1                | :x:                | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | N/A                | N/A     |
+| Windows Server 2008 R2 SP1 | :x:                | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x:     |
+| Windows 7 SP1              | :x:                | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :x:     |
 
 ## Installing
 
