@@ -15,7 +15,7 @@ Powershell module that allows you to work with compressed archives (PS 3.0+). On
 | Windows Server 2008 R2 SP1 |                    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |         |
 | Windows 7 SP1              |                    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |         |
 
-Systems without a green tick either do not run on these systems or will not be tested against and as such are unsupported.
+Systems without a green tick either this module will not run on these systems or will not be tested for compatibility and as such are unsupported.
 
 ## Installing
 
