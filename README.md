@@ -4,6 +4,17 @@
 
 Powershell module that allows you to work with compressed archives (PS 3.0+). Online Help Files - http://gavineke.com/PS7Zip/
 
+## Supported Systems
+
+| Operating System Version   | Core 6 Beta        | WMF 5.1            | WMF 5.0            | WMF 4.0            | WMF 3.0            | WMF 2.0 |
+|----------------------------|--------------------|--------------------|--------------------|--------------------|--------------------|---------|
+| Windows Server 2016        | :heavy_check_mark: | :heavy_check_mark: | N/A                | N/A                | N/A                | N/A     |
+| Windows 10                 | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | N/A                | N/A                | N/A     |
+| Windows Server 2012 R2     |                    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | N/A                | N/A     |
+| Windows 8.1                |                    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | N/A                | N/A     |
+| Windows Server 2008 R2 SP1 |                    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |         |
+| Windows 7 SP1              |                    | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |         |
+
 ## Installing
 
 Download and Install from the PowerShellGallery (Recommended)
