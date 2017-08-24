@@ -18,7 +18,7 @@ install:
 
 test_script:
   - ps: Invoke-AppveyorTest -NormalTest
-#  - ps: Invoke-AppveyorTest -DockerTest
+  - ps: Invoke-AppveyorTest -DockerTest
   - ps: Invoke-AppveyorTest -PSCoreTest
   - ps: Invoke-AppveyorTest -AltInstallTest
 
