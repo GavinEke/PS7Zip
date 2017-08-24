@@ -3,9 +3,10 @@ If (!($PSScriptRoot)) {
     $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 }
 
-$PSVersion = $PSVersionTable.PSVersion.ToString()
+$ModuleName = 'PS7Zip'
+$PSVersion = "$PSVersionTable.PSVersion.ToString()"
 
-Import-Module $PSScriptRoot\..\PS7Zip -Verbose -Force -ErrorAction SilentlyContinue
+Import-Module "$PSScriptRoot\..\$ModuleName\$ModuleName" -Verbose -Force -ErrorAction SilentlyContinue
 
 Describe "PS7Zip Module PS$PSVersion" {
     Context 'Strict mode' {
@@ -20,7 +21,7 @@ Describe "PS7Zip Module PS$PSVersion" {
         It 'Should not have any PSScriptAnalyzer warnings' {
             If (Get-Module PSScriptAnalyzer) {
                 Import-Module PSScriptAnalyzer -Force -ErrorAction SilentlyContinue
-                $ScriptWarnings = @(Invoke-ScriptAnalyzer -Path "$PSScriptRoot\.." -Severity @('Error', 'Warning') -Recurse -Verbose:$false)
+                $ScriptWarnings = @(Invoke-ScriptAnalyzer -Path "$PSScriptRoot\..\$ModuleName" -Severity @('Error', 'Warning') -Recurse -Verbose:$false)
             } Else {
                 $ScriptWarnings = ""
             }
@@ -29,11 +30,11 @@ Describe "PS7Zip Module PS$PSVersion" {
         $script:manifest = $null
         It "has a valid manifest" {
             {
-                $script:manifest = Test-ModuleManifest -Path "$PSScriptRoot\..\PS7Zip.psd1" -ErrorAction Stop -WarningAction SilentlyContinue
+                $script:manifest = Test-ModuleManifest -Path "$PSScriptRoot\..\$ModuleName\$ModuleName.psd1" -ErrorAction Stop -WarningAction SilentlyContinue
             } | Should Not Throw
         }
         It "has a valid name in the manifest" {
-            $script:manifest.Name | Should Be PS7Zip
+            $script:manifest.Name | Should Be $ModuleName
         }
         It "has a valid guid in the manifest" {
             $script:manifest.Guid | Should Be '46cd1d63-7d41-4cfa-9a69-c950d224b291'
