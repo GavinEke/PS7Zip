@@ -44,7 +44,8 @@ Function Invoke-AppVeyorTest {
     }
 
     If ($DockerTest) {
-        Write-Host -ForegroundColor Yellow -Object "[$($(Get-Date) - $BeginTime)] Running Docker Test"
+		Write-Host -ForegroundColor Yellow -Object "[$($(Get-Date) - $BeginTime)] Running Docker Test"
+		Copy-Item -Path "$ProjectRoot\Tests\*" -Destination "$ProjectRoot\Docker"
 
         Set-Location "$ProjectRoot\Docker"
         docker build -t nano -f NanoServer.Dockerfile .
