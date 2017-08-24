@@ -57,7 +57,7 @@ Describe "Compress-7Zip Function PS$PSVersion" {
         It 'should create a gzip archive of a single file and delete the uncompressed file' {
             New-Item archive.csv -ItemType File
             New-Item folder -ItemType Directory
-            Compress-7Zip "archive.csv" -OutputFile ".\folder\files.gz" -ArchiveType GZIP -Remove $True
+            Compress-7Zip "archive.csv" -OutputFile ".\folder\files.gz" -ArchiveType GZIP -Remove
             Test-Path .\folder\files.gz | Should Be $True
             Test-Path .\archive.csv | Should Be $False
         }
