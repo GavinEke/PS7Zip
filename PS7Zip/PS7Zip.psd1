@@ -10,7 +10,7 @@
 RootModule = 'PS7Zip.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.3.0.1604'
+ModuleVersion = '1.3.1'
 
 # ID used to uniquely identify this module
 GUID = '46cd1d63-7d41-4cfa-9a69-c950d224b291'
@@ -22,7 +22,7 @@ Author = 'Gavin Eke'
 # CompanyName = 'Unknown'
 
 # Copyright statement for this module
-Copyright = '(c) 2016 Gavin Eke. All rights reserved.'
+Copyright = '(c) 2017 Gavin Eke. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'Powershell module that allows you to work with compressed archives'
@@ -102,7 +102,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = '* 7za.exe binary file updated to 16.04'
+        ReleaseNotes = 'Major overhaul in preparation of 7Zip v17 and PS7Zip v2.0.0'
 
     } # End of PSData hashtable
 

@@ -1,6 +1,6 @@
 #Requires -Version 3
-$GitHubUser = "GavinEke"
-$RepoName = "PS7Zip"
+$GitHubUser = 'GavinEke'
+$RepoName = 'PS7Zip'
 $ProfileModulePath = "$env:USERPROFILE\Documents\WindowsPowerShell\Modules"
 If (!(Test-Path $ProfileModulePath)) {
     Net-Item -ItemType Directory -Path $ProfileModulePath
