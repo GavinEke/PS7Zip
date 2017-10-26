@@ -55,12 +55,12 @@ Function Invoke-AppVeyorTest {
     If ($PSCoreTest) {
         Write-Host -ForegroundColor Yellow -Object "[$($(Get-Date) - $BeginTime)] Running PSCore Test"
 
-        $PSCore_MSI = "https://github.com/PowerShell/PowerShell/releases/download/v6.0.0-beta.8/PowerShell-6.0.0-beta.8-win-x64.msi"
+        $PSCore_MSI = "https://github.com/PowerShell/PowerShell/releases/download/v6.0.0-beta.9/PowerShell-6.0.0-beta.9-win-x64.msi"
         Invoke-WebRequest -Uri "$PSCore_MSI" -UseBasicParsing -OutFile "C:\PowerShell-win10-x64.msi"
         Start-Process -FilePath msiexec.exe -ArgumentList '-qn','-i C:\PowerShell-win10-x64.msi','-norestart' -wait
-        $PSCore_EXE = Get-Item -Path $Env:ProgramFiles\PowerShell\*\powershell.exe
+        $PSCore_EXE = Get-Item -Path $Env:ProgramFiles\PowerShell\*\pwsh.exe
         New-Item -Type SymbolicLink -Path $Env:ProgramFiles\PowerShell\ -Name latest -Value $PSCore_EXE.DirectoryName
-        & "C:\Program Files\PowerShell\latest\PowerShell.exe" -Command Invoke-Pester @Verbose -Path "$ProjectRoot\Tests -OutputFormat NUnitXml -OutputFile "$ProjectRoot\TestResults_PSCoreTest.xml" -PassThru | Export-Clixml -Path "$ProjectRoot\PesterResults_PSCoreTest.xml""
+        & "C:\Program Files\PowerShell\latest\pwsh.exe" -Command Invoke-Pester @Verbose -Path "$ProjectRoot\Tests -OutputFormat NUnitXml -OutputFile "$ProjectRoot\TestResults_PSCoreTest.xml" -PassThru | Export-Clixml -Path "$ProjectRoot\PesterResults_PSCoreTest.xml""
     }
 
     If ($AltInstallTest) {
