@@ -29,5 +29,4 @@ deploy_script:
   
 on_finish:
   - ps: Update-AppVeyorTestResults -TestFile "$env:APPVEYOR_BUILD_FOLDER\TestResults_NormalTest.xml"
-  - ps: Update-AppVeyorTestResults -TestFile "$env:APPVEYOR_BUILD_FOLDER\TestResults_PSCoreTest.xml"
   - ps: Invoke-AppveyorFinish
