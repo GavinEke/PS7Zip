@@ -1,6 +1,7 @@
 ---
 external help file: PS7Zip-help.xml
-online version: 
+Module Name: PS7Zip
+online version: http://gavineke.com/PS7Zip/Expand-7Zip
 schema: 2.0.0
 ---
 
@@ -12,7 +13,7 @@ Extract contents of a compressed archive file
 ## SYNTAX
 
 ```
-Expand-7Zip [-FullName] <String> [-Remove <Boolean>]
+Expand-7Zip [-FullName] <String> [-Remove]
 ```
 
 ## DESCRIPTION
@@ -20,14 +21,14 @@ Use Expand-7Zip to extract the contents of an archive.
 
 ## EXAMPLES
 
-### Example 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Expand-7Zip archive.zip
 ```
 
 Extract contents of archive.zip in the current working folder
 
-### Example 2
+### -------------------------- EXAMPLE 2 --------------------------
 ```
 Expand-7Zip "c:\folder\files.gz"
 ```
@@ -55,7 +56,7 @@ Accept wildcard characters: False
 If $True this will remove the compressed version of the file only leaving the uncompressed contents.
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: 
 
@@ -73,4 +74,6 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
+
+[http://gavineke.com/PS7Zip/Expand-7Zip](http://gavineke.com/PS7Zip/Expand-7Zip)
 

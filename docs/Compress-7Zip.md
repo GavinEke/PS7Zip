@@ -1,6 +1,7 @@
 ---
 external help file: PS7Zip-help.xml
-online version: 
+Module Name: PS7Zip
+online version: http://gavineke.com/PS7Zip/Compress-7Zip
 schema: 2.0.0
 ---
 
@@ -12,7 +13,7 @@ Create a compressed archive of a file or folder
 ## SYNTAX
 
 ```
-Compress-7Zip [-FullName] <String> [-OutputFile <String>] [-ArchiveType <String>] [-Remove <Boolean>]
+Compress-7Zip [-FullName] <String> [-OutputFile <String>] [-ArchiveType <String>] [-Remove]
 ```
 
 ## DESCRIPTION
@@ -20,21 +21,21 @@ Use Compress-7Zip to create a 7z, gzip, zip, bzip2 or tar archive.
 
 ## EXAMPLES
 
-### Example 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Compress-7Zip c:\scripts
 ```
 
 Create archive.zip in the current working folder of the folder c:\scripts
 
-### Example 2
+### -------------------------- EXAMPLE 2 --------------------------
 ```
 Compress-7Zip "computer inventory.csv" -OutputFile "inventory.gz" -ArchiveType GZIP -Remove $True
 ```
 
 Create a gzip archive of a single file and delete the uncompressed file
 
-### Example 3
+### -------------------------- EXAMPLE 3 --------------------------
 ```
 Get-ChildItem E:\test | Where {$_.LastWriteTime -lt (Get-Date).AddDays(-5)} | Select -First 1 | Compress-7Zip
 ```
@@ -94,7 +95,7 @@ Accept wildcard characters: False
 If $True this will remove the uncompressed version of the file or folder only leaving the compressed archive.
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: 
 
@@ -112,4 +113,6 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
+
+[http://gavineke.com/PS7Zip/Compress-7Zip](http://gavineke.com/PS7Zip/Compress-7Zip)
 

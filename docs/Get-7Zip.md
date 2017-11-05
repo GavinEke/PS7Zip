@@ -1,6 +1,7 @@
 ---
 external help file: PS7Zip-help.xml
-online version: 
+Module Name: PS7Zip
+online version: http://gavineke.com/PS7Zip/Get-7Zip
 schema: 2.0.0
 ---
 
@@ -20,14 +21,14 @@ Use Get-7Zip to list the contents of an archive.
 
 ## EXAMPLES
 
-### Example 1
+### -------------------------- EXAMPLE 1 --------------------------
 ```
 Get-7Zip archive.zip
 ```
 
 List contents of archive.zip in the current working folder
 
-### Example 2
+### -------------------------- EXAMPLE 2 --------------------------
 ```
 Get-7Zip "c:\folder\files.gz"
 ```
@@ -58,4 +59,6 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
+
+[http://gavineke.com/PS7Zip/Get-7Zip](http://gavineke.com/PS7Zip/Get-7Zip)
 
