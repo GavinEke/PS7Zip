@@ -40,7 +40,7 @@ Function Invoke-AppVeyorTest {
         Write-Host -ForegroundColor Yellow -Object "[$($(Get-Date) - $BeginTime)] Running Normal Test"
 
         Import-Module Pester
-        Invoke-Pester @Verbose -Path "$ProjectRoot\Tests" -OutputFormat NUnitXml -OutputFile "$ProjectRoot\TestResults_NormalTest.xml" -PassThru | Export-Clixml -Path "$ProjectRoot\PesterResults_NormalTest.xml"
+        Invoke-Pester -Path "$ProjectRoot\Tests" -OutputFormat NUnitXml -OutputFile "$ProjectRoot\TestResults_NormalTest.xml" -PassThru | Export-Clixml -Path "$ProjectRoot\PesterResults_NormalTest.xml"
     }
 
     If ($DockerTest) {
@@ -60,7 +60,7 @@ Function Invoke-AppVeyorTest {
         Start-Process -FilePath msiexec.exe -ArgumentList '-qn','-i C:\PowerShell-win10-x64.msi','-norestart' -wait
         $PSCore_EXE = Get-Item -Path $Env:ProgramFiles\PowerShell\*\pwsh.exe
         New-Item -Type SymbolicLink -Path $Env:ProgramFiles\PowerShell\ -Name latest -Value $PSCore_EXE.DirectoryName
-        & "C:\Program Files\PowerShell\latest\pwsh.exe" -Command Invoke-Pester @Verbose -Path "$ProjectRoot\Tests -OutputFormat NUnitXml -OutputFile "$ProjectRoot\TestResults_PSCoreTest.xml" -PassThru | Export-Clixml -Path "$ProjectRoot\PesterResults_PSCoreTest.xml""
+        & "C:\Program Files\PowerShell\latest\pwsh.exe" -Command Invoke-Pester -Path "$ProjectRoot\Tests -OutputFormat NUnitXml -OutputFile "$ProjectRoot\TestResults_PSCoreTest.xml" -PassThru | Export-Clixml -Path "$ProjectRoot\PesterResults_PSCoreTest.xml""
     }
 
     If ($AltInstallTest) {
