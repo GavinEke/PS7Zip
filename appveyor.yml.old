@@ -1,0 +1,32 @@
+version: '1.3.{build}.0'
+
+os:
+  - "Visual Studio 2017"
+
+environment:
+  NuGetApiKey:
+    secure: SzN/9XuDneoXfDr9MaS6Ugt1Bsj4MqxzcKB45uvBRGrmSozL+83cEfNEYdd/SYc2
+
+skip_commits:
+  message: /.(md|yml)/
+
+build: false
+
+install:
+  - ps: Import-Module .\tools\Appveyor.psm1
+  - ps: Invoke-AppveyorInstall
+
+test_script:
+  - ps: Invoke-AppveyorTest -NormalTest
+
+after_test:
+  - ps: Write-VersionRequirements
+  - ps: Invoke-AppVeyorBuildDocs
+
+deploy_script:
+  - ps: Invoke-AppVeyorDeploy -DeployToGallery
+  - ps: Invoke-AppVeyorDeploy -DeployToArtifacts
+  
+on_finish:
+  - ps: Update-AppVeyorTestResults -TestFile "$env:APPVEYOR_BUILD_FOLDER\TestResults_NormalTest.xml"
+  - ps: Invoke-AppveyorFinish
