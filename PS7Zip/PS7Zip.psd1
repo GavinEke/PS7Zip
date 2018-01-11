@@ -102,9 +102,9 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'Major overhaul in preparation of 7Zip v17 and PS7Zip v2.0.0'
+        ReleaseNotes = 'Update 7zip binary to 18.00 beta'
         
-        Prerelease = '-beta.1'
+        Prerelease = '-beta2'
 
     } # End of PSData hashtable
 
