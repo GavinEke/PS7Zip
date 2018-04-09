@@ -1,4 +1,4 @@
-﻿<#
+<#
     Parts of this module use the 7-Zip program.
     7-Zip is licensed under the GNU LGPL license.
     www.7-zip.org
@@ -10,7 +10,7 @@
 RootModule = 'PS7Zip.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.3.1'
+ModuleVersion = '2.0.0'
 
 # ID used to uniquely identify this module
 GUID = '46cd1d63-7d41-4cfa-9a69-c950d224b291'
@@ -102,7 +102,9 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'Major overhaul in preparation of 7Zip v17 and PS7Zip v2.0.0'
+        ReleaseNotes = 'Update 7zip binary to 18.00 beta'
+        
+        Prerelease = '-beta2'
 
     } # End of PSData hashtable
 
