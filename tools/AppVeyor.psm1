@@ -124,20 +124,20 @@ Function Invoke-AppVeyorDeploy {
 
 Function Invoke-AppveyorFinish {
     Write-Host -ForegroundColor Yellow -Object "[$($(Get-Date) - $BeginTime)] Finalizing AppVeyor"
-    $AllFiles = Get-ChildItem -Path $ProjectRoot\PesterResults*.xml | Select -ExpandProperty FullName
+    #$AllFiles = Get-ChildItem -Path $ProjectRoot\PesterResults*.xml | Select-Object -ExpandProperty FullName
 
     $Results = @( Get-ChildItem -Path "$ProjectRoot\PesterResults_PS*.xml" | Import-Clixml )
 
     $FailedCount = $Results |
-        Select -ExpandProperty FailedCount |
+        Select-Object -ExpandProperty FailedCount |
         Measure-Object -Sum |
-        Select -ExpandProperty Sum
+        Select-Object -ExpandProperty Sum
 
     If ($FailedCount -gt 0) {
 
         $FailedItems = $Results |
-            Select -ExpandProperty TestResult |
-            Where {$_.Passed -notlike $True}
+            Select-Object -ExpandProperty TestResult |
+            Where-Object {$_.Passed -notlike $True}
 
         Write-Host -ForegroundColor Yellow -Object "Failed Tests"
         $FailedItems | ForEach-Object {
@@ -148,7 +148,7 @@ Function Invoke-AppveyorFinish {
                 Name = "It $($Item.Name)"
                 Result = $Item.Result
             }
-        } | Sort Describe, Context, Name, Result | Format-List
+        } | Sort-Object Describe, Context, Name, Result | Format-List
 
         throw "$FailedCount tests failed."
     }

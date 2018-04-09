@@ -9,9 +9,9 @@ Expand-7Zip archive.zip
 Extract contents of archive.zip in the current working folder
 
 .EXAMPLE
-Expand-7Zip archive.zip -DestinationPath $env:TEMP
+Expand-7Zip archive.zip -DestinationPath c:\archive
 
-Extract contents of archive.zip in the temp folder
+Extract contents of archive.zip in the c:\archive folder
 
 .EXAMPLE
 Expand-7Zip "c:\folder\files.gz"

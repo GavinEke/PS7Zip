@@ -63,9 +63,9 @@ Describe "Expand-7Zip Function - $OSVersion" {
             Remove-Item archive.txt
         }
 
-        It 'should extract contents of archive.zip in the temp folder' {
-            Expand-7Zip archive.zip -DestinationPath $env:TEMP
-            Test-Path "$env:TEMP\archive.txt" | Should Be $True
+        It 'should extract contents of archive.zip in c:\archive' {
+            Expand-7Zip archive.zip -DestinationPath c:\archive
+            Test-Path "c:\archive\archive.txt" | Should Be $True
             Remove-Item archive.txt
         }
 		
