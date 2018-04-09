@@ -32,15 +32,18 @@ http://gavineke.com/PS7Zip/Compress-7Zip
 Function Compress-7Zip {
     [CmdletBinding(HelpUri='http://gavineke.com/PS7Zip/Compress-7Zip')]
     Param(
-        [Parameter(Mandatory=$True,Position=1,ValueFromPipelineByPropertyName=$True)]
-        [ValidateScript({Test-Path $_})]
-        [string]$FullName,
-        
+        [Parameter(Mandatory=$True,Position=0,ValueFromPipelineByPropertyName=$True)]
+        [ValidateScript({$_ | Test-Path -PathType Leaf})]
+        [System.IO.FileInfo]$FullName,
+
+        [Parameter()]
         [string]$OutputFile,
 
+        [Parameter()]
         [ValidateSet("7Z","GZIP","ZIP","BZIP2","TAR")]
         [string]$ArchiveType,
 
+        [Parameter()]
         [switch]$Remove
 	)
 	

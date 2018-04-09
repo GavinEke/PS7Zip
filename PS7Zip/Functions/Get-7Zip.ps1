@@ -21,9 +21,9 @@ http://gavineke.com/PS7Zip/Get-7Zip
 Function Get-7Zip {
     [CmdletBinding(HelpUri='http://gavineke.com/PS7Zip/Get-7Zip')]
     Param(
-        [Parameter(Mandatory=$True,Position=1,ValueFromPipelineByPropertyName=$True)]
-        [ValidateScript({Test-Path $_})]
-        [string]$FullName
+        [Parameter(Mandatory=$True,Position=0,ValueFromPipelineByPropertyName=$True)]
+        [ValidateScript({$_ | Test-Path -PathType Leaf})]
+        [System.IO.FileInfo]$FullName
 	)
 	
 	Begin {}

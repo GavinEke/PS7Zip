@@ -62,6 +62,12 @@ Describe "Expand-7Zip Function - $OSVersion" {
             Test-Path archive.txt | Should Be $True
             Remove-Item archive.txt
         }
+
+        It 'should extract contents of archive.zip in the temp folder' {
+            Expand-7Zip archive.zip -DestinationPath $env:TEMP
+            Test-Path "$env:TEMP\archive.txt" | Should Be $True
+            Remove-Item archive.txt
+        }
 		
         It 'should extract contents of folder\files.gz into the current working folder' {
             Expand-7Zip 'folder\files.gz'

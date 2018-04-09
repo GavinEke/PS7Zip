@@ -10,7 +10,7 @@
 RootModule = 'PS7Zip.psm1'
 
 # Version number of this module.
-ModuleVersion = '2.0.0'
+ModuleVersion = '2.1.0'
 
 # ID used to uniquely identify this module
 GUID = '46cd1d63-7d41-4cfa-9a69-c950d224b291'
@@ -102,9 +102,11 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'Update 7zip binary to 18.00 beta'
-        
-        Prerelease = '-beta2'
+        ReleaseNotes = '
+            * New parameter `DestinationPath` for Expand-7Zip
+            * Better parameter validation
+            * Updated docs
+        '
 
     } # End of PSData hashtable
 

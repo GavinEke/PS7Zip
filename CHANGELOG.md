@@ -1,7 +1,7 @@
 # Changelog
 
-## 1.3.1
+## 2.1.0
 
-* Modulized build tools
-* Moved tests to repo root folder
-* General code improvements
+* New parameter `DestinationPath` for Expand-7Zip
+* Better parameter validation
+* Updated docs
