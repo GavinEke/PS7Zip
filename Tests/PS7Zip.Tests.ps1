@@ -67,7 +67,7 @@ Describe "Expand-7Zip Function - $OSVersion" {
             #New-Item -Path "c:\" -Name "archive" -ItemType "directory"
             Expand-7Zip archive.zip -DestinationPath c:\archive
             Test-Path "c:\archive\archive.txt" | Should Be $True
-            Remove-Item archive.txt
+            Remove-Item "c:\archive\archive.txt"
         }
 		
         It 'should extract contents of folder\files.gz into the current working folder' {
