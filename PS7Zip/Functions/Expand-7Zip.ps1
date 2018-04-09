@@ -48,7 +48,7 @@ Function Expand-7Zip {
     Process {
         Write-Verbose -Message 'Extracting contents of compressed archive file'
         If ($DestinationPath) {
-            & "$7zaBinary" x -o="$DestinationPath" "$FullName"
+            & "$7zaBinary" x -o"$DestinationPath" "$FullName"
         } Else {
             & "$7zaBinary" x "$FullName"
         }
