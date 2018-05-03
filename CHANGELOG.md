@@ -1,7 +1,5 @@
 # Changelog
 
-## 2.1.0
+## 2.2.0
 
-* New parameter `DestinationPath` for Expand-7Zip
-* Better parameter validation
-* Updated docs
+* Update 7-Zip Binary to 18.05
