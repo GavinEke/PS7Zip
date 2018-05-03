@@ -102,11 +102,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = '
-            * New parameter `DestinationPath` for Expand-7Zip
-            * Better parameter validation
-            * Updated docs
-        '
+        ReleaseNotes = 'Update 7-Zip Binary to 18.05'
 
     } # End of PSData hashtable
 
